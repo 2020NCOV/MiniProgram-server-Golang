@@ -46,7 +46,7 @@ func NewRouter() *gin.Engine {
 	}
 
 	// 路由， 获取用户基本信息
-	v3 := router.Group("/info")
+	v3 := router.Group("/index/info")
 	{
 		//获取用户信息
 		v3.POST("/getmyinfo", api.GetUserInfo)
