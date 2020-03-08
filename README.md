@@ -1,6 +1,6 @@
 # ncov-report-wx-server-Golang
 
-> 这里是NOCO 2020疫情防控-人员健康管理平台开源项目的小程序后端--Golang版本。
+> 这里是NCOV 2020疫情防控-人员健康管理平台开源项目的小程序后端--Golang版本。
 
 主项目入口 >> https://github.com/2020NCOV/ncov-report
 
@@ -45,3 +45,44 @@
 ## 与小程序交互流程 —— 以getcode接口为例
 
 ![流程图](http://q6uspeueh.bkt.clouddn.com/requestRoute.png)
+
+## 项目本地配置
+### 1.导入Goland
+    可能会下载一会儿包，稍微等待一下
+
+### 2.在项目根目录新建文件.env,内容如下：
+```
+MYSQL_DSN="db_user:db_passwd@tcp(127.0.0.1:3306)/db_name?charset=utf8&parseTime=True&loc=Local" # Mysql连接配置
+REDIS_ADDR="127.0.0.1:6379" # Redis端口和地址
+REDIS_PW=""                 # Redis连接密码
+REDIS_DB=""                 # Redis库从0到10，不填即为0
+SESSION_SECRE="fRJ%KVZVoq4Du4#*Rx" # Seesion密钥，必须设置而且不要泄露
+GIN_MODE="debug"            # 设置gin的运行模式，有 debug 和 release
+LOG_LEVEL="debug"
+APP_ID=""                   #appid
+APP_SECREAT=""              #appsecreat
+```
+注：其实redis没有用到，环境变量中不写也可
+
+### 3. run main.go如果RUN窗口出现如下字样，则代表后端程序启动成功
+```
+[GIN-debug] POST   /index/login/getcode      --> Miniprogram-server-Golang/api.UserLogin (3 handlers)
+[GIN-debug] POST   /index/login/check_is_registered --> Miniprogram-server-Golang/api.UserIsReg (3 handlers)
+[GIN-debug] POST   /index/login/check_user   --> Miniprogram-server-Golang/api.CheckUser (3 handlers)
+[GIN-debug] POST   /index/login/register     --> Miniprogram-server-Golang/api.WeixinUsrRegister (3 handlers)
+[GIN-debug] POST   /index/login/getcorpname  --> Miniprogram-server-Golang/api.GetCorp (3 handlers)
+[GIN-debug] POST   /index/login/bind         --> Miniprogram-server-Golang/api.UserBind (3 handlers)
+[GIN-debug] POST   /index/login/unbind       --> Miniprogram-server-Golang/api.UserUnBind (3 handlers)
+[GIN-debug] POST   /index/report/save        --> Miniprogram-server-Golang/api.SaveInfo (3 handlers)
+[GIN-debug] POST   /index/report/getlastdata --> Miniprogram-server-Golang/api.GetInfo (3 handlers)
+[GIN-debug] POST   /index/info/getmyinfo           --> Miniprogram-server-Golang/api.GetUserInfo (3 handlers)
+[GIN-debug] Listening and serving HTTP on :8080
+```
+ ### 4.修改小程序端的baseURL,在/ncov-report-mini-program/util/config.js文件中
+ ```
+ const baseURL = 'http://127.0.0.1:8080/index'; //这表示小程序访问的是本机的8080端口，正是后端程序监听的端口
+ ```
+ ### 5.测试接口
+ - 编译运行小程序
+ - 打开调试器，点击network
+ - 查看小程序发出的请求getcode，如果返回status code是200OK则表示前后端通信成功
