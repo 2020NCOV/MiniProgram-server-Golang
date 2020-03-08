@@ -5,7 +5,7 @@
 主项目入口 >> https://github.com/2020NCOV/ncov-report
 
 ## 目录结构
-
+```
 |-- MiniProgram-server-Golang
     |-- .env.example —— 这个是对环境变量如何设置的示例，在自己的项目中改名为.env并加入.gitignore
     |-- .gitignore—— 上传代码时一些不需要上传的文件就加入.gitignore
@@ -39,9 +39,9 @@
         |-- user_bind_service.go
         |-- user_openid_service.go
         |-- wexin_user_register.go
-
+```
 **核心部分就是以上加粗部分的文件**
 
 ## 与小程序交互流程 —— 以getcode接口为例
 
-![image-20200308094548037](/Users/hua/Library/Application Support/typora-user-images/image-20200308094548037.png)
+![流程图](http://q6uspeueh.bkt.clouddn.com/requestRoute.png)
