@@ -1,6 +1,6 @@
 package serializer
 
-import "ncov_go/model"
+import "Miniprogram-server-Golang/model"
 
 // Usertoken 用户token
 type Status struct {

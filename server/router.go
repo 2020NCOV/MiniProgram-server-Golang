@@ -2,7 +2,7 @@ package server
 
 import (
 	"github.com/gin-gonic/gin"
-	"ncov_go/api"
+	"Miniprogram-server-Golang/api"
 )
 
 func NewRouter() *gin.Engine {

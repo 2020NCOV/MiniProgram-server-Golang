@@ -2,7 +2,7 @@ package api
 
 import (
 	"github.com/gin-gonic/gin"
-	"ncov_go/service"
+	"Miniprogram-server-Golang/service"
 )
 
 // UserLogin 用户登录接口，获取openid，token

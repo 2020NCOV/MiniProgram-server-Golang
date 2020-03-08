@@ -2,8 +2,8 @@ package service
 
 import (
 	"github.com/gin-gonic/gin"
-	"ncov_go/model"
-	"ncov_go/serializer"
+	"Miniprogram-server-Golang/model"
+	"Miniprogram-server-Golang/serializer"
 	"time"
 )
 

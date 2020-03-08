@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"gopkg.in/go-playground/validator.v8"
-	"ncov_go/serializer"
+	"Miniprogram-server-Golang/serializer"
 )
 
 // ErrorResponse 返回错误消息

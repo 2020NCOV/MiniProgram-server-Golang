@@ -1,4 +1,4 @@
-module ncov_go
+module Miniprogram-server-Golang
 
 go 1.13
 

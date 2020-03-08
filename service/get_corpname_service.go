@@ -2,15 +2,15 @@ package service
 
 import (
 	"github.com/gin-gonic/gin"
-	"ncov_go/model"
-	"ncov_go/serializer"
+	"Miniprogram-server-Golang/model"
+	"Miniprogram-server-Golang/serializer"
 )
 
 // CheckIsRegisteredService 管理用户注册服务
 type GetCorpService struct {
 	Uid    string `form:"uid" json:"uid"`
 	Token  string `form:"token" json:"token"`
-	Corpid  string `form:"corpid" json:"corpid"`
+	Corpid string `form:"corpid" json:"corpid"`
 }
 
 // isRegistered 判断用户是否注册过

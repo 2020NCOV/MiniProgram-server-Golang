@@ -1,6 +1,6 @@
 package serializer
 
-import "ncov_go/model"
+import "Miniprogram-server-Golang/model"
 
 // User 用户序列化器
 type Info struct {

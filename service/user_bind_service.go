@@ -2,17 +2,17 @@ package service
 
 import (
 	"github.com/gin-gonic/gin"
-	"ncov_go/model"
-	"ncov_go/serializer"
+	"Miniprogram-server-Golang/model"
+	"Miniprogram-server-Golang/serializer"
 )
 
 // UserBindService 管理用户注册服务
 type UserBindService struct {
 	UserId   string `form:"userid" json:"userid"`
-	Corpid string `form:"corpid" json:"corpid"`
-	Uid    string `form:"uid" json:"uid"`
-	Token  string `form:"token" json:"token"`
-	Password  string `form:"password" json:"password"`
+	Corpid   string `form:"corpid" json:"corpid"`
+	Uid      string `form:"uid" json:"uid"`
+	Token    string `form:"token" json:"token"`
+	Password string `form:"password" json:"password"`
 }
 
 // Bind 用户绑定

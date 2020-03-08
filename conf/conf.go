@@ -2,7 +2,7 @@ package conf
 
 import (
 	"github.com/joho/godotenv"
-	"ncov_go/model"
+	"Miniprogram-server-Golang/model"
 	"os"
 )
 

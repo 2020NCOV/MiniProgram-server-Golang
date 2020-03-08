@@ -1,8 +1,8 @@
 package main
 
 import (
-	"ncov_go/conf"
-	"ncov_go/server"
+	"Miniprogram-server-Golang/conf"
+	"Miniprogram-server-Golang/server"
 )
 
 func main() {
