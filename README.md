@@ -48,9 +48,9 @@
 
 ## 项目本地配置
 ### 1.导入Goland
-    可能会下载一会儿包，稍微等待一下
+    可能会下载一会儿包，稍微等待一下。将项目创建在%GOPATH%/src目录下可以加载之前已经安装在%GOPATH%/pkg中的包。
 
-### 2.在项目根目录新建文件.env,内容如下：
+### 2.在项目根目录新建文件.env, 内容如下：
 ```
 MYSQL_DSN="db_user:db_passwd@tcp(127.0.0.1:3306)/db_name?charset=utf8&parseTime=True&loc=Local" # Mysql连接配置
 REDIS_ADDR="127.0.0.1:6379" # Redis端口和地址
@@ -60,11 +60,14 @@ SESSION_SECRE="fRJ%KVZVoq4Du4#*Rx" # Seesion密钥，必须设置而且不要泄
 GIN_MODE="debug"            # 设置gin的运行模式，有 debug 和 release
 LOG_LEVEL="debug"
 APP_ID=""                   #appid
-APP_SECREAT=""              #appsecreat
+APP_SECRET=""              #appsecret
 ```
-注：其实redis没有用到，环境变量中不写也可
+注：
+- 其实redis没有用到，环境变量中不写也可
+- 将db_user和db_passwd修改为自己本地的mysql连接的用户名和密码，并创建相应的数据库
+- 补充自己注册的小程序的app_id和app_secret
 
-### 3. run main.go如果RUN窗口出现如下字样，则代表后端程序启动成功
+### 3. 执行命令go run main.go, 如果RUN窗口出现如下字样，则代表后端程序启动成功
 ```
 [GIN-debug] POST   /index/login/getcode      --> Miniprogram-server-Golang/api.UserLogin (3 handlers)
 [GIN-debug] POST   /index/login/check_is_registered --> Miniprogram-server-Golang/api.UserIsReg (3 handlers)
