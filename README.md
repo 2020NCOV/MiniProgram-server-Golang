@@ -1,8 +1,15 @@
 # ncov-report-wx-server-Golang
 
-> 这里是NCOV 2020疫情防控-人员健康管理平台开源项目的小程序后端--Golang版本。
+> 这里是NCOV 2020疫情防控-人员健康管理平台开源项目的小程序后端--Golang版本。  详细项目记录及学习文档见[doc文件夹](https://github.com/huagua/MiniProgram-server-Golang/tree/master/doc)
 
 主项目入口 >> https://github.com/2020NCOV/ncov-report
+
+## 项目导航
+- [ncov-report-wx-server-Golang](#ncov-report-wx-server-golang)
+    - [项目导航](#项目导航)
+    - [目录结构](#目录结构)
+    - [与小程序交互流程](#与小程序交互流程)
+    - [项目本地配置](#项目本地配置)
 
 ## 目录结构
 ```
@@ -40,9 +47,10 @@
         |-- user_openid_service.go
         |-- wexin_user_register.go
 ```
-**核心部分就是以上加粗部分的文件**
+**核心部分就是以上加星部分的文件**
 
-## 与小程序交互流程 —— 以getcode接口为例
+## 与小程序交互流程 
+   以getcode接口为例
 
 ![流程图](http://q6uspeueh.bkt.clouddn.com/requestRoute.png)
 
@@ -64,7 +72,7 @@ APP_SECRET=""              #appsecret
 ```
 注：
 - 其实redis没有用到，环境变量中不写也可
-- 将db_user和db_passwd修改为自己本地的mysql连接的用户名和密码，并创建相应的数据库
+- 将db_user和db_passwd修改为自己本地的mysql连接的用户名和密码，并创建相应的数据库，将db_name替换成对应数据库名
 - 补充自己注册的小程序的app_id和app_secret
 
 ### 3. 执行命令go run main.go, 如果RUN窗口出现如下字样，则代表后端程序启动成功
