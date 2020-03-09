@@ -1,11 +1,12 @@
 package service
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/medivhzhan/weapp/v2"
 	"Miniprogram-server-Golang/model"
 	"Miniprogram-server-Golang/serializer"
 	"os"
+
+	"github.com/gin-gonic/gin"
+	"github.com/medivhzhan/weapp/v2"
 )
 
 // UserOpenIdService 获取用户token服务
