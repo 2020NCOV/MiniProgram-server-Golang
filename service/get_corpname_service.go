@@ -1,22 +1,23 @@
 package service
 
 import (
-	"github.com/gin-gonic/gin"
 	"Miniprogram-server-Golang/model"
 	"Miniprogram-server-Golang/serializer"
+
+	"github.com/gin-gonic/gin"
 )
 
-// CheckIsRegisteredService 管理用户注册服务
+// GetCorpService CheckIsRegisteredService 管理用户注册服务
 type GetCorpService struct {
-	Uid    string `form:"uid" json:"uid"`
+	UID    string `form:"uid" json:"uid"`
 	Token  string `form:"token" json:"token"`
 	Corpid string `form:"corpid" json:"corpid"`
 }
 
-// isRegistered 判断用户是否注册过
+// GetCorp isRegistered 判断用户是否注册过
 func (service *GetCorpService) GetCorp(c *gin.Context) serializer.Response {
 
-	if !model.CheckToken(service.Uid, service.Token) {
+	if !model.CheckToken(service.UID, service.Token) {
 		return serializer.ParamErr("token验证错误", nil)
 	}
 
