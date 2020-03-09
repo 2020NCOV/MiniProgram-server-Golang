@@ -7,7 +7,7 @@ import (
 // Code 记录用户token信息
 type Code struct {
 	gorm.Model
-	Uid   string
+	UID   string
 	Token string
 	Code  string
 }

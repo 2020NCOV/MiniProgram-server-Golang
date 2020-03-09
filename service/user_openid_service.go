@@ -9,13 +9,13 @@ import (
 	"github.com/medivhzhan/weapp/v2"
 )
 
-// UserOpenIdService 获取用户token服务
-type UserOpenIdService struct {
+// UserOpenIDService 获取用户token服务
+type UserOpenIDService struct {
 	Code string `form:"code" json:"code"`
 }
 
-// gecode 用户登录函数，获取openidhesessionkey，作为之后操作的验证
-func (service *UserOpenIdService) GetCode(c *gin.Context) serializer.Response {
+// GetCode 用户登录函数，获取openidhesessionkey，作为之后操作的验证
+func (service *UserOpenIDService) GetCode(c *gin.Context) serializer.Response {
 	res, err := weapp.Login(os.Getenv("APP_ID"), os.Getenv("APP_SECREAT"), service.Code)
 
 	if err != nil {
@@ -29,7 +29,7 @@ func (service *UserOpenIdService) GetCode(c *gin.Context) serializer.Response {
 	}
 
 	info := model.Code{
-		Uid:   res.OpenID,
+		UID:   res.OpenID,
 		Token: res.SessionKey,
 		Code:  service.Code,
 	}

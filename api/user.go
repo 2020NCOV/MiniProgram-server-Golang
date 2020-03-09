@@ -1,13 +1,14 @@
 package api
 
 import (
-	"github.com/gin-gonic/gin"
 	"Miniprogram-server-Golang/service"
+
+	"github.com/gin-gonic/gin"
 )
 
 // UserLogin 用户登录接口，获取openid，token
 func UserLogin(c *gin.Context) {
-	var service service.UserOpenIdService
+	var service service.UserOpenIDService
 	if err := c.ShouldBind(&service); err == nil {
 		res := service.GetCode(c)
 		c.JSON(200, res)
@@ -49,7 +50,7 @@ func GetInfo(c *gin.Context) {
 	}
 }
 
-// GetInfo 用户上传信息接口
+// GetUserInfo 用户上传信息接口
 func GetUserInfo(c *gin.Context) {
 	var service service.GetInfoService
 	if err := c.ShouldBind(&service); err == nil {
@@ -82,7 +83,7 @@ func CheckUser(c *gin.Context) {
 	}
 }
 
-// CheckUser 检查用户是否存在
+// WeixinUsrRegister 检查用户是否存在
 func WeixinUsrRegister(c *gin.Context) {
 	var service service.WeixinUserRegister
 	if err := c.ShouldBind(&service); err == nil {
@@ -104,7 +105,7 @@ func UserBind(c *gin.Context) {
 	}
 }
 
-// CheckUser 检查用户是否存在
+// UserUnBind 检查用户是否存在
 func UserUnBind(c *gin.Context) {
 	var service service.UserBindService
 	if err := c.ShouldBind(&service); err == nil {
