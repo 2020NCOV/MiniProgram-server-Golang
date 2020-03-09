@@ -33,6 +33,8 @@ type Corp struct {
 	TypeUsername string
 }
 
+
+
 const (
 	// PassWordCost 密码加密难度
 	PassWordCost = 12

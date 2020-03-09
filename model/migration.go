@@ -8,4 +8,7 @@ func migration() {
 	DB.AutoMigrate(&DailyInfo{})
 	DB.AutoMigrate(&Corp{})
 	DB.AutoMigrate(&Student{})
+
+	//临时
+	DB.AutoMigrate(&WxMpBindInfo{})
 }
