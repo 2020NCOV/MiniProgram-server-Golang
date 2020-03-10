@@ -27,7 +27,7 @@ func (service *GetBindInfoService) GetBindInfo(c *gin.Context) serializer.Respon
 	}
 
 	var bindInfo BindInfo
-	if err := model.DB.Model(model.WxMpBindInfo{}).Select("wx_mp_bind_infos.orgid, corps.corpid, corps.corpname").Joins("left join corps on corps.id = wx_mp_bind_infos.orgid").Where(model.WxMpBindInfo{Isbind: 1, WxUid: service.UID}).First(&bindInfo); err != nil {
+	if err := model.DB.Model(model.WxMpBindInfo{}).Select("wx_mp_bind_infos.orgid, corps.corpid, corps.corpname").Joins("left join corps on corps.id = wx_mp_bind_infos.orgid").Where(model.WxMpBindInfo{Isbind: 1, WxUid: service.UID}).First(&bindInfo).Error; err != nil {
 		return serializer.BuildBindInfoResponse(0, 0, "")
 	}
 	bindCorpid := bindInfo.Corpid
