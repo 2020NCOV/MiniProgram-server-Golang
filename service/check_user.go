@@ -23,7 +23,7 @@ func (service *CheckUserService) CheckUser(c *gin.Context) serializer.Response {
 
 	//再搜索数据库，判断是否存在该用户
 	count := 0
-	if model.DB.Model(&model.Student{}).Where(&model.Student{Uid: service.UID}).Count(&count); count == 0 {
+	if model.DB.Model(&model.Student{}).Where(&model.Student{UID: service.UID}).Count(&count); count == 0 {
 		return serializer.BuildUserCheckResponse(0, service.Corpid, service.UserID)
 	}
 

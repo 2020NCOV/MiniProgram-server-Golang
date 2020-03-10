@@ -8,4 +8,10 @@ func migration() {
 	DB.AutoMigrate(&DailyInfo{})
 	DB.AutoMigrate(&Corp{})
 	DB.AutoMigrate(&Student{})
+
+	// 新版表
+
+	DB.AutoMigrate(&WeChat{})
+	DB.AutoMigrate(&Reporter{})
+	DB.AutoMigrate(&Record{})
 }
