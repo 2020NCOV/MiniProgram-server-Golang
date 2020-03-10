@@ -16,7 +16,7 @@ type UserOpenIDService struct {
 
 // GetCode 用户登录函数，获取openidhesessionkey，作为之后操作的验证
 func (service *UserOpenIDService) GetCode(c *gin.Context) serializer.Response {
-	res, err := weapp.Login(os.Getenv("APP_ID"), os.Getenv("APP_SECREAT"), service.Code)
+	res, err := weapp.Login(os.Getenv("APP_ID"), os.Getenv("APP_SECRET"), service.Code)
 
 	if err != nil {
 		//处理错误

@@ -34,6 +34,13 @@ type IsRegistered struct {
 	IsRegistered int `json:"is_registered"`
 }
 
+// IsRegisteredResponse 用户序列化器（为避免影响其它方法 临时命名为 IsRegisteredBindResponse）
+type IsRegisteredBindResponse struct {
+	ErrCode      int    `json:"errcode"`
+	IsRegistered int    `json:"is_registered"`
+	Msg          string `json:"msg`
+}
+
 // CheckUser 检查
 type CheckUser struct {
 	IsExist int    `json:"is_exist"`
@@ -101,6 +108,13 @@ func BuildCorpResponse(errCode int, corp model.Corp) Response {
 func BuildIsRegisteredResponse(x int) Response {
 	return Response{
 		Data: IsRegistered{IsRegistered: x},
+	}
+}
+
+// BuildIsRegisteredBindResponse 序列化用户注册响应 （为避免影响其它方法 临时增加）
+func BuildIsRegisteredBindResponse(errcode int, isregistered int, msg string) IsRegisteredBindResponse {
+	return IsRegisteredBindResponse{
+		errcode, isregistered, msg,
 	}
 }
 
