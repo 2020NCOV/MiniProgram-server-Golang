@@ -108,9 +108,9 @@ func BuildIsRegisteredResponse(x int) Response {
 }
 
 // BuildIsRegisteredBindResponse 序列化用户注册响应 （为避免影响其它方法 临时增加）
-func BuildIsRegisteredBindResponse(x int, y int, z string) IsRegisteredBindResponse {
+func BuildIsRegisteredBindResponse(errcode int, isregistered int, msg string) IsRegisteredBindResponse {
 	return IsRegisteredBindResponse{
-		x,y,z,
+		errcode, isregistered, msg,
 	}
 }
 
