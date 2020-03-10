@@ -7,24 +7,24 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// GetCorpService CheckIsRegisteredService 管理用户注册服务
+// GetCorpService 管理用户企业身份服务
 type GetCorpService struct {
-	UID    string `form:"uid" json:"uid"`
+	Uid    string `form:"uid" json:"uid"`
 	Token  string `form:"token" json:"token"`
 	Corpid string `form:"corpid" json:"corpid"`
 }
 
-// GetCorp isRegistered 判断用户是否注册过
+// GetCorp 获取用户企业信息
 func (service *GetCorpService) GetCorp(c *gin.Context) serializer.Response {
 
-	if !model.CheckToken(service.UID, service.Token) {
+	if !model.CheckToken(service.Uid, service.Token) {
 		return serializer.ParamErr("token验证错误", nil)
 	}
 
 	var corp model.Corp
-	if err := model.DB.Where("corpid = ?", service.Corpid).First(&corp).Error; err != nil {
-		return serializer.ParamErr("无数据", nil)
+	if err := model.DB.Where(&model.Corp{Corpid: service.Corpid}).First(&corp).Error; err != nil {
+		return serializer.Err(10006, "获取企业信息失败", nil)
 	}
 
-	return serializer.BuildCorpResponse(corp)
+	return serializer.BuildCorpResponse(0, corp)
 }

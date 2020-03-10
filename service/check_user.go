@@ -23,14 +23,14 @@ func (service *CheckUserService) CheckUser(c *gin.Context) serializer.Response {
 
 	//	根据corpid找到公司名称
 	var corp model.Corp
-	if err := model.DB.Where(&model.Corp{Corpid: service.Corpid}).First(&corp); err != nil {
+	if err := model.DB.Where(&model.Corp{Corpid: service.Corpid}).First(&corp).Error; err != nil {
 		return serializer.Err(10006, "获取企业信息失败", nil)
 	}
 
 	corpid := corp.ID
 	//	根据corpid查找用户-企业绑定信息
 	var corpBind model.WxMpBindInfo
-	if err := model.DB.Where(&model.WxMpBindInfo{OrgId: corpid, Username: service.UserID, Isbind: 1}).First(&corpBind); err != nil {
+	if err := model.DB.Where(&model.WxMpBindInfo{OrgId: corpid, Username: service.UserID, Isbind: 1}).First(&corpBind).Error; err != nil {
 		//	错误码未知，张老师没有写到，有待修改
 		return serializer.Err(100019, "用户和企业未绑定", nil)
 	}
