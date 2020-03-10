@@ -74,6 +74,7 @@ func GetCorp(c *gin.Context) {
 
 // CheckUser 检查用户是否存在
 func CheckUser(c *gin.Context) {
+	//	将请求的内容通过ShouldBind方法绑定到service中。每一个接口中对应的service
 	var service service.CheckUserService
 	if err := c.ShouldBind(&service); err == nil {
 		res := service.CheckUser(c)
