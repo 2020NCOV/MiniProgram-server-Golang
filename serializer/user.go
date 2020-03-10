@@ -21,6 +21,8 @@ type Student struct {
 
 // Corp 表单模板序列化器
 type Corp struct {
+	ErrCode      int    `json:"errcode"`
+	Corpid       string `json:"corpid"`
 	Corpname     string `json:"corpname"`
 	TypeCorpname string `json:"type_corpname"`
 	TypeUsername string `json:"type_username"`
@@ -30,6 +32,13 @@ type Corp struct {
 // IsRegistered 用户序列化器
 type IsRegistered struct {
 	IsRegistered int `json:"is_registered"`
+}
+
+// IsRegisteredResponse 用户序列化器（为避免影响其它方法 临时命名为 IsRegisteredBindResponse）
+type IsRegisteredBindResponse struct {
+	ErrCode      int    `json:"errcode"`
+	IsRegistered int    `json:"is_registered"`
+	Msg          string `json:"msg`
 }
 
 // CheckUser 检查
@@ -61,13 +70,15 @@ func BuildUserInfo(user model.Student) Student {
 	}
 }
 
-// BuildCorp 序列化status
-func BuildCorp(corp model.Corp) Corp {
+// BuildCorp 序列化corp
+func BuildCorp(errCode int, corp model.Corp) Corp {
 	return Corp{
-		Corpname:     corp.Corpid,
-		TypeCorpname: "组织编号",
-		TypeUsername: "学号",
-		TemplateCode: "default",
+		ErrCode:      errCode,
+		Corpid:       corp.Corpid,
+		Corpname:     corp.Corpname,
+		TypeCorpname: corp.TypeCorpname,
+		TypeUsername: corp.TypeUsername,
+		TemplateCode: corp.TemplateCode,
 	}
 }
 
@@ -86,10 +97,10 @@ func BuildStatusResponse(info model.Code) Response {
 	}
 }
 
-// BuildCorpResponse 序列化status响应
-func BuildCorpResponse(corp model.Corp) Response {
+// BuildCorpResponse 序列化corp响应
+func BuildCorpResponse(errCode int, corp model.Corp) Response {
 	return Response{
-		Data: BuildCorp(corp),
+		Data: BuildCorp(errCode, corp),
 	}
 }
 
@@ -97,6 +108,13 @@ func BuildCorpResponse(corp model.Corp) Response {
 func BuildIsRegisteredResponse(x int) Response {
 	return Response{
 		Data: IsRegistered{IsRegistered: x},
+	}
+}
+
+// BuildIsRegisteredBindResponse 序列化用户注册响应 （为避免影响其它方法 临时增加）
+func BuildIsRegisteredBindResponse(errcode int, isregistered int, msg string) IsRegisteredBindResponse {
+	return IsRegisteredBindResponse{
+		errcode, isregistered, msg,
 	}
 }
 
