@@ -24,11 +24,12 @@ type WeChat struct{
   gorm.Model
   OpenID string `gorm:"unique;"`
 }
+// Reporter 上报人
 type Reporter struct {
   gorm.Model
   WeChat  WeChat `gorm:"association_foreignkey:WeChatRefer;unique;type:varchar(200)"`
   WeChatRefer string //对应的微信号
-  Org_id  int  // 学校id
+  OrgID  int  // 机构id
   Name string`gorm:"varchar(30);"`
   Gender int  //0代表女性，1代表男性
   Tel int64    //手机号
@@ -41,6 +42,7 @@ type Reporter struct {
 ### 上报记录
 
 ``` go
+// Record 上报记录
 type Record struct{
   gorm.Model
   Reporter Reporter  `gorm:"foreign_key:ReporterRefer;`

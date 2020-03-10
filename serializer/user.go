@@ -51,10 +51,10 @@ func BuildUserCheck(x int, corpid string, userid string) CheckUser {
 // BuildUserInfo 序列化
 func BuildUserInfo(user model.Student) Student {
 	return Student{
-		UID:          user.Uid,
+		UID:          user.UID,
 		Name:         user.Name,
 		PhoneNum:     user.PhoneNum,
-		UserID:       user.UserId,
+		UserID:       user.UserID,
 		Corpname:     user.Corpid,
 		TypeCorpname: "组织编号",
 		TypeUsername: "学号",

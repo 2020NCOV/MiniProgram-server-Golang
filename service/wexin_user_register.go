@@ -39,8 +39,8 @@ func (service *WeixinUserRegister) UserRegister(c *gin.Context) serializer.Respo
 	user := model.Student{
 		Name:         service.Name,
 		PhoneNum:     service.PhoneNum,
-		Uid:          service.UID,
-		UserId:       service.UserID,
+		UID:          service.UID,
+		UserID:       service.UserID,
 		Corpid:       service.Corpid,
 		IsRegistered: 1,
 		Password:     "password",

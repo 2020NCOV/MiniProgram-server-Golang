@@ -51,7 +51,7 @@ func (service *SaveDailyInfoService) SaveDailyInfo(c *gin.Context) serializer.Re
 		ReturnDormNum:             service.ReturnDormNum,
 		ReturnTime:                service.ReturnTime,
 		ReturnTrafficInfo:         service.ReturnTrafficInfo,
-		Uid:                       service.UID,
+		UID:                       service.UID,
 		SaveDate:                  time.Now().Format("2006-01-02"),
 	}
 
