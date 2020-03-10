@@ -2,7 +2,7 @@ package serializer
 
 import "Miniprogram-server-Golang/model"
 
-// User 用户序列化器
+// Info 用户序列化器
 type Info struct {
 	IsReturnSchool            string `json:"is_return_school"`
 	ReturnTime                string `json:"return_time"`

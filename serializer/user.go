@@ -2,18 +2,18 @@ package serializer
 
 import "Miniprogram-server-Golang/model"
 
-// Usertoken 用户token
+// Status 状态
 type Status struct {
-	Uid   string `json:"uid"`
+	UID   string `json:"uid"`
 	Token string `json:"token"`
 }
 
-// student 用户序列化器
+// Student 用户序列化器
 type Student struct {
-	Uid          string `json:"uid"`
+	UID          string `json:"uid"`
 	Name         string `json:"name"`
 	PhoneNum     string `json:"phone_num"`
-	UserId       string `json:"userid"`
+	UserID       string `json:"userid"`
 	Corpname     string `json:"corpname"`
 	TypeCorpname string `json:"type_corpname"`
 	TypeUsername string `json:"type_username"`
@@ -27,33 +27,34 @@ type Corp struct {
 	TemplateCode string `json:"template_code"`
 }
 
-// isRegistered 用户序列化器
+// IsRegistered 用户序列化器
 type IsRegistered struct {
 	IsRegistered int `json:"is_registered"`
 }
 
+// CheckUser 检查
 type CheckUser struct {
 	IsExist int    `json:"is_exist"`
-	UserId  string `json:"userid"`
+	UserID  string `json:"userid"`
 	Corpid  string `json:"corpid"`
 }
 
-// BuildUserInfo 序列化
+// BuildUserCheck 序列化
 func BuildUserCheck(x int, corpid string, userid string) CheckUser {
 	return CheckUser{
 		IsExist: x,
 		Corpid:  corpid,
-		UserId:  userid,
+		UserID:  userid,
 	}
 }
 
 // BuildUserInfo 序列化
 func BuildUserInfo(user model.Student) Student {
 	return Student{
-		Uid:          user.Uid,
+		UID:          user.Uid,
 		Name:         user.Name,
 		PhoneNum:     user.PhoneNum,
-		UserId:       user.UserId,
+		UserID:       user.UserId,
 		Corpname:     user.Corpid,
 		TypeCorpname: "组织编号",
 		TypeUsername: "学号",
@@ -73,12 +74,12 @@ func BuildCorp(corp model.Corp) Corp {
 // BuildStatus 序列化status
 func BuildStatus(info model.Code) Status {
 	return Status{
-		Uid:   info.Uid,
+		UID:   info.UID,
 		Token: info.Token,
 	}
 }
 
-// BuildstatusResponse 序列化status响应，返回token、uid等信息
+// BuildStatusResponse 序列化status响应，返回token、uid等信息
 func BuildStatusResponse(info model.Code) Response {
 	return Response{
 		Data: BuildStatus(info),

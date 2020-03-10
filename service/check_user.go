@@ -1,24 +1,27 @@
 package service
 
 import (
-	"github.com/gin-gonic/gin"
 	"Miniprogram-server-Golang/model"
 	"Miniprogram-server-Golang/serializer"
+
+	"github.com/gin-gonic/gin"
 )
 
-// CheckIsRegisteredService 管理用户注册服务
+// CheckUserService CheckIsRegisteredService 管理用户注册服务
 type CheckUserService struct {
-	UserId string `form:"userid" json:"userid"`
+	UserID string `form:"userid" json:"userid"`
 	Corpid string `form:"corpid" json:"corpid"`
-	Uid    string `form:"uid" json:"uid"`
+	UID    string `form:"uid" json:"uid"`
 	Token  string `form:"token" json:"token"`
 }
 
 // 用于检测用户标识是否已经被绑定
+
 func (service *CheckUserService) CheckUser(c *gin.Context) serializer.Response {
-	if !model.CheckToken(service.Uid, service.Token) {
+	if !model.CheckToken(service.UID, service.Token) {
 		return serializer.ParamErr("token验证错误", nil)
 	}
+
 
 	//	根据corpid找到公司名称
 	var corp model.Corp
@@ -44,4 +47,5 @@ func (service *CheckUserService) CheckUser(c *gin.Context) serializer.Response {
 		return serializer.Err(100020, "该用户已被其他微信绑定，每个用户只能被一个微信绑定", nil)
 		//return serializer.BuildUserCheckResponse(1, service.Corpid, service.UserId)
 	}
+
 }
