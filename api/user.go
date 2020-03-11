@@ -82,7 +82,11 @@ func CheckUser(c *gin.Context) {
 	var service service.CheckUserService
 	if err := c.ShouldBind(&service); err == nil {
 		res := service.CheckUser(c)
-		c.JSON(200, res)
+		if res.Data != nil {
+			c.JSON(200, res.Data)
+		} else {
+			c.JSON(200, res)
+		}
 	} else {
 		c.JSON(200, ErrorResponse(err))
 	}
