@@ -18,6 +18,8 @@ type Record struct {
 	Remarks                   string `json:"remarks"`
 	PsyKnowledge              string `json:"psy_knowledge"`
 	PlanCompanyDate           string `json:"plan_company_date"`
+	ReturnDistrictPath        string `json:"return_district_path"`
+	CurrentDistrictPath       string `json:"current_district_path"`
 }
 
 // BuildRecord 序列化report
@@ -37,6 +39,8 @@ func BuildRecord(info model.DailyInfo) Record {
 		Remarks:                   info.Remarks,
 		PsyKnowledge:              info.PsyKnowledge,
 		PlanCompanyDate:           info.PlanCompanyDate,
+		ReturnDistrictPath:        info.ReturnDistrictPath,
+		CurrentDistrictPath:       info.CurrentDistrictPath,
 	}
 }
 

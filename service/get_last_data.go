@@ -3,6 +3,7 @@ package service
 import (
 	"Miniprogram-server-Golang/model"
 	"Miniprogram-server-Golang/serializer"
+	"log"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -35,21 +36,21 @@ func (service *GetLastDataService) GetLastData(c *gin.Context) serializer.Respon
 
 	// 获取表单信息
 	var lastData model.DailyInfo
-	queryStr := `select is_return_school,remarks,return_dorm_num,return_time,return_traffic_info,current_health_value,
-	current_contagion_risk_value,return_district_value,current_district_value,current_temperature,psy_status,
-	psy_demand,psy_knowledge,plan_company_date from ` +
-		"report_record_" + templateCode + " where wxuid = ? order by time desc limit 1"
-	model.DB2.QueryRow(queryStr, service.UID).Scan(&lastData.IsReturnSchool, &lastData.Remarks, &lastData.ReturnDormNum,
+	queryStr := `select is_return_school,IFNULL(remarks,""),IFNULL(return_dorm_num,""),IFNULL(return_time,""),IFNULL(return_traffic_info,""),
+	IFNULL(current_health_value,""),IFNULL(current_contagion_risk_value,""),IFNULL(return_district_value,""),IFNULL(current_district_value,""),
+	IFNULL(current_temperature,""),IFNULL(psy_status,""),IFNULL(psy_demand,""),IFNULL(psy_knowledge,""),IFNULL(plan_company_date,"") 
+	from ` + "report_record_" + templateCode + " where wxuid = ? order by time desc limit 1"
+	err = model.DB2.QueryRow(queryStr, service.UID).Scan(&lastData.IsReturnSchool, &lastData.Remarks, &lastData.ReturnDormNum,
 		&lastData.ReturnTime, &lastData.ReturnTrafficInfo, &lastData.CurrentHealthValue, &lastData.CurrentContagionRiskValue,
 		&lastData.ReturnDistrictValue, &lastData.CurrentDistrictValue, &lastData.CurrentTemperature, &lastData.PsyStatus,
 		&lastData.PsyDemand, &lastData.PsyKnowledge, &lastData.PlanCompanyDate)
 	if err == nil {
-		//log.Println(lastData.ReturnDistrictValue + " " + lastData.CurrentDistrictValue)
 		lastData.ReturnDistrictPath = service.getDistrictPath(lastData.ReturnDistrictValue)
 		lastData.CurrentDistrictPath = service.getDistrictPath(lastData.CurrentDistrictValue)
 		return serializer.BuildLastDataResponse(false, lastData)
 	}
-
+	// 出现错误时返回空值
+	log.Println(err)
 	return serializer.BuildLastDataResponse(true, lastData)
 }
 
@@ -70,5 +71,6 @@ func (service *GetLastDataService) getDistrictPath(cityCode string) string {
 			}
 		}
 	}
+	log.Println(pathStr)
 	return pathStr
 }
