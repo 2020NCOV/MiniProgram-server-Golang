@@ -19,6 +19,7 @@ type Record struct {
 
 /*
 -------------------------以下为旧版表------------------------------
+等getlastdata完善后即可删除
 */
 
 // DailyInfo 上报  旧表
@@ -40,4 +41,6 @@ type DailyInfo struct {
 	ReturnTrafficInfo         string
 	UID                       string
 	SaveDate                  string
+	ReturnDistrictPath        string
+	CurrentDistrictPath       string
 }

@@ -51,5 +51,5 @@ func (service *WeixinUserRegister) UserRegister(c *gin.Context) serializer.Respo
 		return serializer.ParamErr("注册失败", err)
 	}
 
-	return serializer.BuildIsRegisteredResponse(1)
+	return serializer.BuildIsRegisteredResponse(0,1)
 }

@@ -17,7 +17,7 @@ $RECYCLE.BIN/
 node_modules/
 
 #thinkphp
-/.idea
+.idea
 /.vscode
 *.log
 .env

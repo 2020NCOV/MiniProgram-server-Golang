@@ -31,7 +31,16 @@ type Corp struct {
 
 // IsRegistered 用户序列化器
 type IsRegistered struct {
+	//php代码和api中还有errcode参数
+	ErrCode      int    `json:"errcode"`
 	IsRegistered int `json:"is_registered"`
+}
+
+// IsRegisteredBindResponse 用户序列化器（为避免影响其它方法 临时命名为 IsRegisteredBindResponse）
+type IsRegisteredBindResponse struct {
+	ErrCode      int    `json:"errcode"`
+	IsRegistered int    `json:"is_registered"`
+	Msg          string `json:"msg`
 }
 
 // CheckUser 检查
@@ -47,19 +56,6 @@ func BuildUserCheck(x int, corpid string, userid string) CheckUser {
 		IsExist: x,
 		Corpid:  corpid,
 		UserID:  userid,
-	}
-}
-
-// BuildUserInfo 序列化
-func BuildUserInfo(user model.Student) Student {
-	return Student{
-		UID:          user.UID,
-		Name:         user.Name,
-		PhoneNum:     user.PhoneNum,
-		UserID:       user.UserID,
-		Corpname:     user.Corpid,
-		TypeCorpname: "组织编号",
-		TypeUsername: "学号",
 	}
 }
 
@@ -98,9 +94,16 @@ func BuildCorpResponse(errCode int, corp model.Corp) Response {
 }
 
 // BuildIsRegisteredResponse 序列化用户注册响应
-func BuildIsRegisteredResponse(x int) Response {
+func BuildIsRegisteredResponse(errcode int,is_registered int) Response {
 	return Response{
-		Data: IsRegistered{IsRegistered: x},
+		Data: IsRegistered{ErrCode: errcode,IsRegistered: is_registered},
+	}
+}
+
+// BuildIsRegisteredBindResponse 序列化用户注册响应 （为避免影响其它方法 临时增加）
+func BuildIsRegisteredBindResponse(errcode int, isregistered int, msg string) IsRegisteredBindResponse {
+	return IsRegisteredBindResponse{
+		errcode, isregistered, msg,
 	}
 }
 
@@ -108,12 +111,5 @@ func BuildIsRegisteredResponse(x int) Response {
 func BuildUserCheckResponse(x int, corpid string, userid string) Response {
 	return Response{
 		Data: BuildUserCheck(x, corpid, userid),
-	}
-}
-
-// BuildUserInfoResponse 序列化用户信息响应
-func BuildUserInfoResponse(user model.Student) Response {
-	return Response{
-		Data: BuildUserInfo(user),
 	}
 }

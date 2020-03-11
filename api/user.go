@@ -11,7 +11,7 @@ func UserLogin(c *gin.Context) {
 	var service service.UserOpenIDService
 	if err := c.ShouldBind(&service); err == nil {
 		res := service.GetCode(c)
-		c.JSON(200, res)
+		c.JSON(200, res.Data)
 	} else {
 		c.JSON(200, ErrorResponse(err))
 	}
@@ -41,7 +41,7 @@ func SaveInfo(c *gin.Context) {
 
 // GetInfo 用户上传信息接口
 func GetInfo(c *gin.Context) {
-	var service service.GetInfoService
+	var service service.GetLastDataService
 	if err := c.ShouldBind(&service); err == nil {
 		res := service.GetLastData(c)
 		c.JSON(200, res)
@@ -53,7 +53,7 @@ func GetInfo(c *gin.Context) {
 // GetUserInfo 用户上传信息接口
 func GetUserInfo(c *gin.Context) {
 	var service service.GetInfoService
-	if err := c.ShouldBind(&service); err == nil {
+	if err := c.BindJSON(&service); err == nil {
 		res := service.GetMyInfo(c)
 		c.JSON(200, res)
 	} else {
