@@ -17,12 +17,14 @@ type GetCorpService struct {
 // GetCorp 获取用户企业信息
 func (service *GetCorpService) GetCorp(c *gin.Context) serializer.Response {
 
-	if !model.CheckToken(service.Uid, service.Token) {
-		return serializer.ParamErr("token验证错误", nil)
-	}
+	// if !model.CheckToken(service.Uid, service.Token) {
+	// 	return serializer.ParamErr("token验证错误", nil)
+	// }
 
 	var corp model.Corp
-	if err := model.DB.Where(&model.Corp{Corpid: service.Corpid}).First(&corp).Error; err != nil {
+	err := model.DB2.QueryRow("select corp_code,corpname,template_code,type_corpname,type_username from organization where corp_code =?", service.Corpid).
+		Scan(&corp.Corpid, &corp.Corpname, &corp.TemplateCode, &corp.TypeCorpname, &corp.TypeUsername)
+	if err != nil {
 		return serializer.Err(10006, "获取企业信息失败", nil)
 	}
 
