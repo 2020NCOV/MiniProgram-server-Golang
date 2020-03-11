@@ -27,7 +27,7 @@ func (service *GetBindInfoService) GetBindInfo(c *gin.Context) serializer.Respon
 	}
 
 	var corpCode string
-	if err:= model.DB2.QueryRow("select u.org_id, o.corpname, o.corp_code from wx_mp_bind_info as u left join organization as o on o.id = u.orgid where u.isbind = ? and u.wx_uid = ?", 1, service.UID).Scan(&corpCode); (err!=nil || corpCode == "") {
+	if err:= model.DB2.QueryRow("select o.corp_code from wx_mp_bind_info as u left join organization as o on o.id = u.orgid where u.isbind = ? and u.wx_uid = ?", 1, service.UID).Scan(&corpCode); (err!=nil || corpCode == "") {
 		return serializer.BuildBindInfoResponse(0, 0, "")
 	}
 	return serializer.BuildBindInfoResponse(0, 1, corpCode)
