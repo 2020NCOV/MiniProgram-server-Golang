@@ -31,6 +31,8 @@ type Corp struct {
 
 // IsRegistered 用户序列化器
 type IsRegistered struct {
+	//php代码和api中还有errcode参数
+	ErrCode      int    `json:"errcode"`
 	IsRegistered int `json:"is_registered"`
 }
 
@@ -105,9 +107,9 @@ func BuildCorpResponse(errCode int, corp model.Corp) Response {
 }
 
 // BuildIsRegisteredResponse 序列化用户注册响应
-func BuildIsRegisteredResponse(x int) Response {
+func BuildIsRegisteredResponse(errcode int,is_registered int) Response {
 	return Response{
-		Data: IsRegistered{IsRegistered: x},
+		Data: IsRegistered{ErrCode: errcode,IsRegistered: is_registered},
 	}
 }
 
