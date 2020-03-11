@@ -35,10 +35,10 @@ func (service *GetLastDataService) GetLastData(c *gin.Context) serializer.Respon
 	}
 
 	// 获取表单信息
-	var lastData model.DailyInfo
+	var lastData model.Record
 	queryStr := `select is_return_school,IFNULL(remarks,""),IFNULL(return_dorm_num,""),IFNULL(return_time,""),IFNULL(return_traffic_info,""),
-	IFNULL(current_health_value,""),IFNULL(current_contagion_risk_value,""),IFNULL(return_district_value,""),IFNULL(current_district_value,""),
-	IFNULL(current_temperature,""),IFNULL(psy_status,""),IFNULL(psy_demand,""),IFNULL(psy_knowledge,""),IFNULL(plan_company_date,"") 
+	IFNULL(current_health_value,0),IFNULL(current_contagion_risk_value,0),IFNULL(return_district_value,0),IFNULL(current_district_value,0),
+	IFNULL(current_temperature,0),IFNULL(psy_status,0),IFNULL(psy_demand,0),IFNULL(psy_knowledge,0),IFNULL(plan_company_date,"") 
 	from ` + "report_record_" + templateCode + " where wxuid = ? order by time desc limit 1"
 	err = model.DB2.QueryRow(queryStr, service.UID).Scan(&lastData.IsReturnSchool, &lastData.Remarks, &lastData.ReturnDormNum,
 		&lastData.ReturnTime, &lastData.ReturnTrafficInfo, &lastData.CurrentHealthValue, &lastData.CurrentContagionRiskValue,
@@ -55,12 +55,11 @@ func (service *GetLastDataService) GetLastData(c *gin.Context) serializer.Respon
 }
 
 // getDistrictPath 获取行政区信息
-func (service *GetLastDataService) getDistrictPath(cityCode string) string {
+func (service *GetLastDataService) getDistrictPath(cityCode int) string {
 	var dis model.District
-	code, err := strconv.Atoi(cityCode)
-	err = model.DB2.QueryRow("select name,level_id,parent_id from com_district where value = ?", code).
-		Scan(&dis.Name, &dis.LevelID, &dis.ParentID)
 	var pathStr string
+	err := model.DB2.QueryRow("select name,level_id,parent_id from com_district where value = ?", cityCode).
+		Scan(&dis.Name, &dis.LevelID, &dis.ParentID)
 	if err == nil {
 		pathStr = dis.Name
 		if dis.LevelID != 1 {
@@ -71,6 +70,5 @@ func (service *GetLastDataService) getDistrictPath(cityCode string) string {
 			}
 		}
 	}
-	log.Println(pathStr)
 	return pathStr
 }

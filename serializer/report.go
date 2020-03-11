@@ -4,43 +4,43 @@ import "Miniprogram-server-Golang/model"
 
 // Record 用户序列化器
 type Record struct {
-	IsReturnSchool            string `json:"is_return_school"`
+	IsReturnSchool            int    `json:"is_return_school"`
+	CurrentHealthValue        int    `json:"current_health_value"`
+	CurrentContagionRiskValue int    `json:"current_contagion_risk_value"`
+	ReturnDistrictValue       int    `json:"return_district_value"`
+	CurrentDistrictValue      int    `json:"current_district_value"`
+	CurrentTemperature        int    `json:"current_temperature"`
+	PsyStatus                 int    `json:"psy_status"`
+	PsyDemand                 int    `json:"psy_demand"`
+	PsyKnowledge              int    `json:"psy_knowledge"`
 	ReturnTime                string `json:"return_time"`
 	ReturnDormNum             string `json:"return_dorm_num"`
 	ReturnTrafficInfo         string `json:"return_traffic_info"`
-	CurrentHealthValue        string `json:"current_health_value"`
-	CurrentContagionRiskValue string `json:"current_contagion_risk_value"`
-	ReturnDistrictValue       string `json:"return_district_value"`
-	CurrentDistrictValue      string `json:"current_district_value"`
-	CurrentTemperature        string `json:"current_temperature"`
-	PsyStatus                 string `json:"psy_status"`
-	PsyDemand                 string `json:"psy_demand"`
 	Remarks                   string `json:"remarks"`
-	PsyKnowledge              string `json:"psy_knowledge"`
 	PlanCompanyDate           string `json:"plan_company_date"`
 	ReturnDistrictPath        string `json:"return_district_path"`
 	CurrentDistrictPath       string `json:"current_district_path"`
 }
 
 // BuildRecord 序列化report
-func BuildRecord(info model.DailyInfo) Record {
+func BuildRecord(record model.Record) Record {
 	return Record{
-		IsReturnSchool:            info.IsReturnSchool,
-		ReturnTime:                info.ReturnTime,
-		ReturnDormNum:             info.ReturnDormNum,
-		ReturnTrafficInfo:         info.ReturnTrafficInfo,
-		CurrentHealthValue:        info.CurrentHealthValue,
-		CurrentContagionRiskValue: info.CurrentContagionRiskValue,
-		ReturnDistrictValue:       info.ReturnDistrictValue,
-		CurrentDistrictValue:      info.CurrentDistrictValue,
-		CurrentTemperature:        info.CurrentTemperature,
-		PsyStatus:                 info.PsyStatus,
-		PsyDemand:                 info.PsyDemand,
-		Remarks:                   info.Remarks,
-		PsyKnowledge:              info.PsyKnowledge,
-		PlanCompanyDate:           info.PlanCompanyDate,
-		ReturnDistrictPath:        info.ReturnDistrictPath,
-		CurrentDistrictPath:       info.CurrentDistrictPath,
+		IsReturnSchool:            record.IsReturnSchool,
+		ReturnTime:                record.ReturnTime,
+		ReturnDormNum:             record.ReturnDormNum,
+		ReturnTrafficInfo:         record.ReturnTrafficInfo,
+		CurrentHealthValue:        record.CurrentHealthValue,
+		CurrentContagionRiskValue: record.CurrentContagionRiskValue,
+		ReturnDistrictValue:       record.ReturnDistrictValue,
+		CurrentDistrictValue:      record.CurrentDistrictValue,
+		CurrentTemperature:        record.CurrentTemperature,
+		PsyStatus:                 record.PsyStatus,
+		PsyDemand:                 record.PsyDemand,
+		Remarks:                   record.Remarks,
+		PsyKnowledge:              record.PsyKnowledge,
+		PlanCompanyDate:           record.PlanCompanyDate,
+		ReturnDistrictPath:        record.ReturnDistrictPath,
+		CurrentDistrictPath:       record.CurrentDistrictPath,
 	}
 }
 
@@ -52,13 +52,19 @@ func BuildSuccessSave() Response {
 }
 
 // BuildLastDataResponse 序列化响应
-func BuildLastDataResponse(isEmpty bool, info model.DailyInfo) Response {
+func BuildLastDataResponse(isEmpty bool, record model.Record) Response {
 	if isEmpty {
 		return Response{
-			Data: "",
+			Data: struct {
+				IsEmpty int         `json:"isEmpty"`
+				Data    interface{} `json:"data"`
+			}{1, nil},
 		}
 	}
 	return Response{
-		Data: BuildRecord(info),
+		Data: struct {
+			IsEmpty int         `json:"isEmpty"`
+			Data    interface{} `json:"data"`
+		}{0, BuildRecord(record)},
 	}
 }
