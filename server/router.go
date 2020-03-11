@@ -1,8 +1,9 @@
 package server
 
 import (
-	"github.com/gin-gonic/gin"
 	"Miniprogram-server-Golang/api"
+
+	"github.com/gin-gonic/gin"
 )
 
 func NewRouter() *gin.Engine {
