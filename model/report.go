@@ -41,4 +41,6 @@ type DailyInfo struct {
 	ReturnTrafficInfo         string
 	UID                       string
 	SaveDate                  string
+	ReturnDistrictPath        string
+	CurrentDistrictPath       string
 }

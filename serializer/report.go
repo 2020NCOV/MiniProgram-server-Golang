@@ -2,8 +2,8 @@ package serializer
 
 import "Miniprogram-server-Golang/model"
 
-// Info 用户序列化器
-type Info struct {
+// Record 用户序列化器
+type Record struct {
 	IsReturnSchool            string `json:"is_return_school"`
 	ReturnTime                string `json:"return_time"`
 	ReturnDormNum             string `json:"return_dorm_num"`
@@ -20,9 +20,9 @@ type Info struct {
 	PlanCompanyDate           string `json:"plan_company_date"`
 }
 
-// BuildInfo 序列化status
-func BuildInfo(info model.DailyInfo) Info {
-	return Info{
+// BuildRecord 序列化report
+func BuildRecord(info model.DailyInfo) Record {
+	return Record{
 		IsReturnSchool:            info.IsReturnSchool,
 		ReturnTime:                info.ReturnTime,
 		ReturnDormNum:             info.ReturnDormNum,
@@ -48,8 +48,13 @@ func BuildSuccessSave() Response {
 }
 
 // BuildLastDataResponse 序列化响应
-func BuildLastDataResponse(info model.DailyInfo) Response {
+func BuildLastDataResponse(isEmpty bool, info model.DailyInfo) Response {
+	if isEmpty {
+		return Response{
+			Data: "",
+		}
+	}
 	return Response{
-		Data: BuildInfo(info),
+		Data: BuildRecord(info),
 	}
 }
