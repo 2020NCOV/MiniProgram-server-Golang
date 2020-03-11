@@ -17,9 +17,9 @@ type GetCorpService struct {
 // GetCorp 获取用户企业信息
 func (service *GetCorpService) GetCorp(c *gin.Context) serializer.Response {
 
-	// if !model.CheckToken(service.Uid, service.Token) {
-	// 	return serializer.ParamErr("token验证错误", nil)
-	// }
+	if !model.CheckToken(service.Uid, service.Token) {
+		return serializer.ParamErr("token验证错误", nil)
+	}
 
 	var corp model.Corp
 	err := model.DB2.QueryRow("select corp_code,corpname,template_code,type_corpname,type_username from organization where corp_code =?", service.Corpid).
