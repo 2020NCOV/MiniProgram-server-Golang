@@ -22,7 +22,9 @@ func (service *GetCorpService) GetCorp(c *gin.Context) serializer.Response {
 	}
 
 	var corp model.Corp
-	if err := model.DB.Where(&model.Corp{Corpid: service.Corpid}).First(&corp).Error; err != nil {
+	err := model.DB2.QueryRow("select corp_code,corpname,template_code,type_corpname,type_username from organization where corp_code =?", service.Corpid).
+		Scan(&corp.Corpid, &corp.Corpname, &corp.TemplateCode, &corp.TypeCorpname, &corp.TypeUsername)
+	if err != nil {
 		return serializer.Err(10006, "获取企业信息失败", nil)
 	}
 
