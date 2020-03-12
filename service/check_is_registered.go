@@ -16,7 +16,7 @@ type CheckIsRegisteredService struct {
 }
 
 // IsRegistered 判断用户是否注册过
-func (service *CheckIsRegisteredService) IsRegistered(c *gin.Context) interface {} {
+func (service *CheckIsRegisteredService) IsRegistered(c *gin.Context) serializer.Response {
 
 	if !model.CheckToken(service.UID, service.Token) {
 		return serializer.ParamErr("token验证错误", nil)
@@ -32,9 +32,9 @@ func (service *CheckIsRegisteredService) IsRegistered(c *gin.Context) interface 
 	////到wx_mp_bind_info表中查找是否有绑定信息
 	var bindid string
 	if err := model.DB2.QueryRow("select id from wx_mp_bind_info where org_id =? and wx_uid =? and isbind =?", orgid, service.UID, 1).Scan(&bindid); err != nil || bindid == "" {
-		return serializer.BuildIsRegisteredResponse(0, 0).Data
+		return serializer.BuildIsRegisteredResponse(0, 0)
 	} else {
-		return serializer.BuildIsRegisteredResponse(0, 1).Data
+		return serializer.BuildIsRegisteredResponse(0, 1)
 	}
 
 }

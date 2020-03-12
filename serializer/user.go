@@ -96,7 +96,7 @@ func BuildCorpResponse(errCode int, corp model.Corp) Response {
 // BuildIsRegisteredResponse 序列化用户注册响应
 func BuildIsRegisteredResponse(errcode int,is_registered int) Response {
 	return Response{
-		Data: IsRegistered{ErrCode: errcode,IsRegistered: is_registered},
+		Data:IsRegistered {ErrCode: errcode,IsRegistered: is_registered},
 	}
 }
 
