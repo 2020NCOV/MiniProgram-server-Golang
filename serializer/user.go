@@ -38,17 +38,19 @@ type IsRegistered struct {
 
 // CheckUser 检查
 type CheckUser struct {
-	IsExist int    `json:"is_exist"`
+	ErrCode int	   `json:"errcode"`
 	UserID  string `json:"userid"`
-	Corpid  string `json:"corpid"`
+	CorpID  string `json:"corpid"`
+	IsExist int    `json:"is_exist"`
 }
 
 // BuildUserCheck 序列化
-func BuildUserCheck(x int, corpid string, userid string) CheckUser {
+func BuildUserCheck(errCode int, corpID string, userID string, x int) CheckUser {
 	return CheckUser{
+		ErrCode: errCode,
+		CorpID:  corpID,
+		UserID:  userID,
 		IsExist: x,
-		Corpid:  corpid,
-		UserID:  userid,
 	}
 }
 
@@ -94,8 +96,8 @@ func BuildIsRegisteredResponse(errcode int,is_registered int) Response {
 }
 
 // BuildUserCheckResponse 序列化验证用户是否响应
-func BuildUserCheckResponse(x int, corpid string, userid string) Response {
+func BuildUserCheckResponse(errCode int, corpID string, userID string, x int) Response {
 	return Response{
-		Data: BuildUserCheck(x, corpid, userid),
+		Data: BuildUserCheck(errCode, corpID, userID, x),
 	}
 }

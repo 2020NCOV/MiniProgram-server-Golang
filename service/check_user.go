@@ -24,19 +24,22 @@ func (service *CheckUserService) CheckUser(c *gin.Context) serializer.Response {
 	/*
 		原生sql版本
 	 */
-	var depId string;
-	if err := model.DB2.QueryRow("select id from organization where corp_code = ?", service.Corpid).Scan(&depId); (err!=nil || depId == "") {
+	var depId int
+	if err := model.DB2.QueryRow("select id from organization where corp_code = ?", service.Corpid).Scan(&depId); err!=nil || depId == 0 {
 		return serializer.Err(10006, "获取企业信息失败", nil)
 	}
 
-	var wxUid string;
-	if err := model.DB2.QueryRow("select wx_uid from wx_mp_bind_info where org_id = ? and username = ? and isbind = ?", depId, service.UserID, 1).Scan(&wxUid); (err!=nil || wxUid == ""){
-		return serializer.Err(100020, "该用户已被其他微信绑定，每个用户只能被一个微信绑定", nil)
+	var wxUid string
+	if err := model.DB2.QueryRow("select wx_uid from wx_mp_bind_info where org_id = ? and username = ? and isbind = ?", depId, service.UserID, 1).Scan(&wxUid); err!=nil || wxUid == "" {
+		//	待增加bind接口后修改isExist字段值
+		return serializer.BuildUserCheckResponse(0, service.Corpid, service.UserID, 0)
 	}
 
-	return serializer.BuildUserCheckResponse(0, service.Corpid, service.UserID)
-
-	
+	if wxUid == service.UID {
+		return serializer.BuildUserCheckResponse(0, service.Corpid, service.UserID, 0)
+	} else {
+		return serializer.Err(100020, "该用户已被其他微信绑定，每个用户只能被一个微信绑定", nil)
+	}
 
 
 	/*
