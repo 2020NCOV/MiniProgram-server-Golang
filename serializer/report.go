@@ -22,6 +22,13 @@ type Record struct {
 	CurrentDistrictPath       string `json:"current_district_path"`
 }
 
+// ResponseData 生成返回消息体
+type ResponseData struct {
+	Errcode int         `json:"errcode"`
+	IsEmpty int         `json:"isEmpty"`
+	Data    interface{} `json:"data"`
+}
+
 // BuildRecord 序列化report
 func BuildRecord(record model.Record) Record {
 	return Record{
@@ -55,16 +62,10 @@ func BuildSuccessSave() Response {
 func BuildLastDataResponse(isEmpty bool, record model.Record) Response {
 	if isEmpty {
 		return Response{
-			Data: struct {
-				IsEmpty int         `json:"isEmpty"`
-				Data    interface{} `json:"data"`
-			}{1, nil},
+			Data: ResponseData{0, 1, nil},
 		}
 	}
 	return Response{
-		Data: struct {
-			IsEmpty int         `json:"isEmpty"`
-			Data    interface{} `json:"data"`
-		}{0, BuildRecord(record)},
+		Data: ResponseData{0, 0, BuildRecord(record)},
 	}
 }
