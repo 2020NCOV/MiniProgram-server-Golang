@@ -119,7 +119,7 @@ func UserUnBind(c *gin.Context) {
 	var service service.UserBindService
 	if err := c.ShouldBind(&service); err == nil {
 		res := service.UnBind(c)
-		c.JSON(200, res)
+		c.JSON(200, res.Data)
 	} else {
 		c.JSON(200, ErrorResponse(err))
 	}
