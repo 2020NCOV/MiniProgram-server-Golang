@@ -44,7 +44,11 @@ func GetInfo(c *gin.Context) {
 	var service service.GetLastDataService
 	if err := c.ShouldBind(&service); err == nil {
 		res := service.GetLastData(c)
-		c.JSON(200, res)
+		if res.Code == 0 {
+			c.JSON(200, res.Data)
+		} else {
+			c.JSON(200, res)
+		}
 	} else {
 		c.JSON(200, ErrorResponse(err))
 	}
@@ -53,9 +57,13 @@ func GetInfo(c *gin.Context) {
 // GetUserInfo 用户上传信息接口
 func GetUserInfo(c *gin.Context) {
 	var service service.GetInfoService
-	if err := c.BindJSON(&service); err == nil {
+	if err := c.ShouldBind(&service); err == nil {
 		res := service.GetMyInfo(c)
-		c.JSON(200, res)
+		if res.Code == 0 {
+			c.JSON(200, res.Data)
+		} else {
+			c.JSON(200, res)
+		}
 	} else {
 		c.JSON(200, ErrorResponse(err))
 	}
