@@ -14,9 +14,11 @@ type Code struct {
 
 // CheckToken 判断token是否正确
 func CheckToken(uid string, token string) bool {
-	count := 0
-	if DB.Model(&Code{}).Where("uid = ? and token = ?", uid, token).Count(&count); count == 0 {
+	res, _ := DB2.Query("select wid from wx_mp_user where wid = ? and token = ?", uid, token)
+
+	if !res.Next() {
 		return false
 	}
+	
 	return true
 }
