@@ -3,10 +3,9 @@ package service
 import (
 	"Miniprogram-server-Golang/model"
 	"Miniprogram-server-Golang/serializer"
-	"os"
-
 	"github.com/gin-gonic/gin"
 	"github.com/medivhzhan/weapp/v2"
+	"os"
 )
 
 // UserOpenIDService 获取用户token服务
@@ -35,16 +34,24 @@ func (service *UserOpenIDService) GetCode(c *gin.Context) serializer.Response {
 	}
 
 	//查看数据库中是否已有token信息
-	count := 0
-	if model.DB.Model(&model.Code{}).Where("uid = ? and token = ?", res.OpenID, res.SessionKey).Count(&count); count == 0 {
-		//将之前的数据删除
-		model.DB.Where("uid = ?", res.OpenID).Delete(model.Code{})
-
-		// 记录用户本次token信息
-		if err := model.DB.Create(&info).Error; err != nil {
-			return serializer.ParamErr("token记录失败", err)
-		}
+	err = model.DB2.QueryRow("select openid, token from wx_mp_user where openid = ?,  token  = ?", res.OpenID, res.SessionKey).
+		Scan(&res.OpenID, &res.SessionKey)
+	if err != nil {
+		return serializer.Err(1008, "获取请求失败，请退出重试", nil)
+	}
+	//如果没有，重新存入并返回
+	err = model.DB2.QueryRow("insert into wx_mp_user(openid, token)values(?,?)", res.OpenID, res.SessionKey)
+	if err != nil {
+		return serializer.BuildStatusResponse(res.SessionKey, res.OpenID, 1, 0)
 	}
 
 	return serializer.BuildStatusResponse(info)
 }
+
+
+
+
+
+
+
+

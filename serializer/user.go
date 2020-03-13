@@ -6,6 +6,8 @@ import "Miniprogram-server-Golang/model"
 type Status struct {
 	UID   string `json:"uid"`
 	Token string `json:"token"`
+	IsRegistered int `json:"is_registered"`
+	ErrCode int `json:"errcode"`
 }
 
 // Student 用户序列化器
@@ -75,9 +77,12 @@ func BuildStatus(info model.Code) Status {
 }
 
 // BuildStatusResponse 序列化status响应，返回token、uid等信息
-func BuildStatusResponse(info model.Code) Response {
+func BuildStatusResponse(token string, uid string, isRegistered int, errcode int) Response {
 	return Response{
-		Data: BuildStatus(info),
+		Token: token,
+		UID: uid,
+		IsRegistered: isRegistered,
+		ErrCode: errcode,
 	}
 }
 
