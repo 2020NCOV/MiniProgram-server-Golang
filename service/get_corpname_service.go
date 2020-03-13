@@ -1,19 +1,20 @@
 package service
 
 import (
-	"github.com/gin-gonic/gin"
 	"Miniprogram-server-Golang/model"
 	"Miniprogram-server-Golang/serializer"
+
+	"github.com/gin-gonic/gin"
 )
 
-// CheckIsRegisteredService 管理用户注册服务
+// GetCorpService 管理用户企业身份服务
 type GetCorpService struct {
 	Uid    string `form:"uid" json:"uid"`
 	Token  string `form:"token" json:"token"`
 	Corpid string `form:"corpid" json:"corpid"`
 }
 
-// isRegistered 判断用户是否注册过
+// GetCorp 获取用户企业信息
 func (service *GetCorpService) GetCorp(c *gin.Context) serializer.Response {
 
 	if !model.CheckToken(service.Uid, service.Token) {
@@ -21,9 +22,11 @@ func (service *GetCorpService) GetCorp(c *gin.Context) serializer.Response {
 	}
 
 	var corp model.Corp
-	if err := model.DB.Where("corpid = ?", service.Corpid).First(&corp).Error; err != nil {
-		return serializer.ParamErr("无数据", nil)
+	err := model.DB2.QueryRow("select corp_code,corpname,template_code,type_corpname,type_username from organization where corp_code =?", service.Corpid).
+		Scan(&corp.Corpid, &corp.Corpname, &corp.TemplateCode, &corp.TypeCorpname, &corp.TypeUsername)
+	if err != nil {
+		return serializer.Err(10006, "获取企业信息失败", nil)
 	}
 
-	return serializer.BuildCorpResponse(corp)
+	return serializer.BuildCorpResponse(0, corp)
 }

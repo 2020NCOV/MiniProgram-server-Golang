@@ -1,10 +1,11 @@
 package service
 
 import (
-	"github.com/gin-gonic/gin"
 	"Miniprogram-server-Golang/model"
 	"Miniprogram-server-Golang/serializer"
 	"time"
+
+	"github.com/gin-gonic/gin"
 )
 
 // SaveDailyInfoService 管理每日上传信息服务
@@ -23,15 +24,15 @@ type SaveDailyInfoService struct {
 	Remarks                   string `form:"remarks" json:"remarks"`
 	PsyKnowledge              string `form:"psy_knowledge" json:"psy_knowledge"`
 	PlanCompanyDate           string `form:"plan_company_date" json:"plan_company_date"`
-	Uid                       string `form:"uid" json:"uid"`
+	UID                       string `form:"uid" json:"uid"`
 	Token                     string `form:"token" json:"token"`
 	TemplateCode              string `form:"template_code" json:"template_code"`
 }
 
-// isRegistered 判断用户是否存在
+// SaveDailyInfo isRegistered 判断用户是否存在
 func (service *SaveDailyInfoService) SaveDailyInfo(c *gin.Context) serializer.Response {
 
-	if !model.CheckToken(service.Uid, service.Token) {
+	if !model.CheckToken(service.UID, service.Token) {
 		return serializer.ParamErr("token验证错误", nil)
 	}
 
@@ -50,13 +51,13 @@ func (service *SaveDailyInfoService) SaveDailyInfo(c *gin.Context) serializer.Re
 		ReturnDormNum:             service.ReturnDormNum,
 		ReturnTime:                service.ReturnTime,
 		ReturnTrafficInfo:         service.ReturnTrafficInfo,
-		Uid:                       service.Uid,
+		UID:                       service.UID,
 		SaveDate:                  time.Now().Format("2006-01-02"),
 	}
 
 	//判断该用户这天是否已经提交过
 	count := 0
-	if model.DB.Model(&model.DailyInfo{}).Where("uid = ? and save_date = ?", service.Uid, time.Now().Format("2006-01-02")).Count(&count); count > 0 {
+	if model.DB.Model(&model.DailyInfo{}).Where("uid = ? and save_date = ?", service.UID, time.Now().Format("2006-01-02")).Count(&count); count > 0 {
 		return serializer.ParamErr("今日您已提交，请勿重复提交", nil)
 	}
 

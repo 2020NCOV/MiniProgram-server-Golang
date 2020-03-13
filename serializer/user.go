@@ -2,18 +2,18 @@ package serializer
 
 import "Miniprogram-server-Golang/model"
 
-// Usertoken 用户token
+// Status 状态
 type Status struct {
-	Uid   string `json:"uid"`
+	UID   string `json:"uid"`
 	Token string `json:"token"`
 }
 
-// student 用户序列化器
+// Student 用户序列化器
 type Student struct {
-	Uid          string `json:"uid"`
+	UID          string `json:"uid"`
 	Name         string `json:"name"`
 	PhoneNum     string `json:"phone_num"`
-	UserId       string `json:"userid"`
+	UserID       string `json:"userid"`
 	Corpname     string `json:"corpname"`
 	TypeCorpname string `json:"type_corpname"`
 	TypeUsername string `json:"type_username"`
@@ -21,94 +21,83 @@ type Student struct {
 
 // Corp 表单模板序列化器
 type Corp struct {
+	ErrCode      int    `json:"errcode"`
+	Corpid       string `json:"corpid"`
 	Corpname     string `json:"corpname"`
 	TypeCorpname string `json:"type_corpname"`
 	TypeUsername string `json:"type_username"`
 	TemplateCode string `json:"template_code"`
 }
 
-// isRegistered 用户序列化器
+// IsRegistered 用户序列化器
 type IsRegistered struct {
+	//php代码和api中还有errcode参数
+	ErrCode      int    `json:"errcode"`
 	IsRegistered int `json:"is_registered"`
 }
 
+// CheckUser 检查
 type CheckUser struct {
+	ErrCode int	   `json:"errcode"`
+	UserID  string `json:"userid"`
+	CorpID  string `json:"corpid"`
 	IsExist int    `json:"is_exist"`
-	UserId  string `json:"userid"`
-	Corpid  string `json:"corpid"`
 }
 
-// BuildUserInfo 序列化
-func BuildUserCheck(x int, corpid string, userid string) CheckUser {
+// BuildUserCheck 序列化
+func BuildUserCheck(errCode int, corpID string, userID string, x int) CheckUser {
 	return CheckUser{
+		ErrCode: errCode,
+		CorpID:  corpID,
+		UserID:  userID,
 		IsExist: x,
-		Corpid:  corpid,
-		UserId:  userid,
 	}
 }
 
-// BuildUserInfo 序列化
-func BuildUserInfo(user model.Student) Student {
-	return Student{
-		Uid:          user.Uid,
-		Name:         user.Name,
-		PhoneNum:     user.PhoneNum,
-		UserId:       user.UserId,
-		Corpname:     user.Corpid,
-		TypeCorpname: "组织编号",
-		TypeUsername: "学号",
-	}
-}
-
-// BuildCorp 序列化status
-func BuildCorp(corp model.Corp) Corp {
+// BuildCorp 序列化corp
+func BuildCorp(errCode int, corp model.Corp) Corp {
 	return Corp{
-		Corpname:     corp.Corpid,
-		TypeCorpname: "组织编号",
-		TypeUsername: "学号",
-		TemplateCode: "default",
+		ErrCode:      errCode,
+		Corpid:       corp.Corpid,
+		Corpname:     corp.Corpname,
+		TypeCorpname: corp.TypeCorpname,
+		TypeUsername: corp.TypeUsername,
+		TemplateCode: corp.TemplateCode,
 	}
 }
 
 // BuildStatus 序列化status
 func BuildStatus(info model.Code) Status {
 	return Status{
-		Uid:   info.Uid,
+		UID:   info.UID,
 		Token: info.Token,
 	}
 }
 
-// BuildstatusResponse 序列化status响应，返回token、uid等信息
+// BuildStatusResponse 序列化status响应，返回token、uid等信息
 func BuildStatusResponse(info model.Code) Response {
 	return Response{
 		Data: BuildStatus(info),
 	}
 }
 
-// BuildCorpResponse 序列化status响应
-func BuildCorpResponse(corp model.Corp) Response {
+// BuildCorpResponse 序列化corp响应
+func BuildCorpResponse(errCode int, corp model.Corp) Response {
 	return Response{
-		Data: BuildCorp(corp),
+		Data: BuildCorp(errCode, corp),
 	}
 }
 
 // BuildIsRegisteredResponse 序列化用户注册响应
-func BuildIsRegisteredResponse(x int) Response {
+func BuildIsRegisteredResponse(errcode int,is_registered int) Response {
 	return Response{
-		Data: IsRegistered{IsRegistered: x},
+		Data:IsRegistered {ErrCode: errcode,IsRegistered: is_registered},
 	}
 }
 
 // BuildUserCheckResponse 序列化验证用户是否响应
-func BuildUserCheckResponse(x int, corpid string, userid string) Response {
+func BuildUserCheckResponse(errCode int, corpID string, userID string, x int) Response {
 	return Response{
-		Data: BuildUserCheck(x, corpid, userid),
-	}
-}
-
-// BuildUserInfoResponse 序列化用户信息响应
-func BuildUserInfoResponse(user model.Student) Response {
-	return Response{
-		Data: BuildUserInfo(user),
+		Data: BuildUserCheck(errCode, corpID, userID, x),
 	}
 }
