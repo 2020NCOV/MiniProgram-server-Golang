@@ -9,7 +9,7 @@ import (
 
 // CheckIsRegisteredService 管理用户注册服务
 type CheckIsRegisteredService struct {
-	Code   string `form:"code" json:"code" binding:"required"`
+	Code   string `form:"code" json:"code"`
 	Corpid string `form:"corpid" json:"corpid" binding:"required"`
 	UID    string `form:"uid" json:"uid" binding:"required"`
 	Token  string `form:"token" json:"token" binding:"required"`

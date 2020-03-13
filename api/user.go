@@ -22,7 +22,11 @@ func UserIsReg(c *gin.Context) {
 	var service service.CheckIsRegisteredService
 	if err := c.ShouldBind(&service); err == nil {
 		res := service.IsRegistered(c)
-		c.JSON(200, res.Data)
+		if res.Data != nil {
+			c.JSON(200, res.Data)
+		} else {
+			c.JSON(200, res)
+		}
 	} else {
 		c.JSON(200, ErrorResponse(err))
 	}
