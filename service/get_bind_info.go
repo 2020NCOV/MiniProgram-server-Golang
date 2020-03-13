@@ -7,30 +7,37 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// GetBindInfoService 请加注释
+// GetBindInfoService 管理用户绑定信息服务
 type GetBindInfoService struct {
 	UID   string `form:"uid" json:"uid"`
 	Token string `form:"token" json:"token"`
 }
 
-// BindInfo 请加注释
-type BindInfo struct {
-	Orgid    uint
-	Corpid   string
-	Corpname string
-}
+// BindInfo 存储绑定信息的结构体，gorm方法中用到
+//type BindInfo struct {
+//	Orgid    uint
+//	Corpid   string
+//	Corpname string
+//}
 
-// GetBindInfo 请加注释
+// GetBindInfo 检查用户绑定信息
 func (service *GetBindInfoService) GetBindInfo(c *gin.Context) serializer.Response {
 	if !model.CheckToken(service.UID, service.Token) {
 		return serializer.ParamErr("token验证错误", nil)
 	}
 
+	/*
+		原生sql版本
+	 */
 	var corpCode string
-	if err:= model.DB2.QueryRow("select o.corp_code from wx_mp_bind_info as u left join organization as o on o.id = u.orgid where u.isbind = ? and u.wx_uid = ?", 1, service.UID).Scan(&corpCode); (err!=nil || corpCode == "") {
+	if err:= model.DB2.QueryRow("select o.corp_code from wx_mp_bind_info as u left join organization as o on o.id = u.orgid where u.wx_uid = ? and u.isbind = ?", service.UID, 1).Scan(&corpCode); err!=nil || corpCode == "" {
 		return serializer.BuildBindInfoResponse(0, 0, "")
 	}
 	return serializer.BuildBindInfoResponse(0, 1, corpCode)
+
+	/*
+		gorm版本
+	 */
 
 	//var bindInfo BindIdnfo
 	//
