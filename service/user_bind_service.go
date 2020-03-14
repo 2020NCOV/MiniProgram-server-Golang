@@ -43,8 +43,8 @@ func (service *UserBindService) UnBind(c *gin.Context) serializer.Response {
 		return serializer.BuildIsRegisteredResponse(serializer.CodeParamErr, 0)
 	}
 	// 再搜索数据库，修改注册状态
-	var is_registered int
-	err := model.DB2.QueryRow("SELECT isbind FROM wx_mp_bind_info WHERE wx_uid = ?", service.UID).Scan(&is_registered)
+	var isRegistered int
+	err := model.DB2.QueryRow("SELECT isbind FROM wx_mp_bind_info WHERE wx_uid = ?", service.UID).Scan(&isRegistered)
 	if err != nil {
 		// 无该用户 根据 PHP 代码此处返回 errcode: 0 is_registered: 0
 		if err == sql.ErrNoRows {
