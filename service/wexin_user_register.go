@@ -20,36 +20,46 @@ type WeixinUserRegister struct {
 // UserRegister isRegistered 判断用户是否注册过
 func (service *WeixinUserRegister) UserRegister(c *gin.Context) serializer.Response {
 
+	if service.Name == "" {
+		return serializer.ParamErr("参数错误:name", nil)
+	}
+	if service.PhoneNum == "" {
+		return serializer.ParamErr("参数错误:phonenum", nil)
+	}
+	if service.UID == "" {
+		return serializer.ParamErr("参数错误:uid", nil)
+	}
+	if service.UserID == "" {
+		return serializer.ParamErr("参数错误:userid", nil)
+	}
+	if service.Corpid == "" {
+		return serializer.ParamErr("参数错误:corpid", nil)
+	}
+	if service.Token == "" {
+		return serializer.ParamErr("参数错误:token", nil)
+	}
+
 	if !model.CheckToken(service.UID, service.Token) {
 		return serializer.ParamErr("token验证错误", nil)
 	}
 
-	count := 0
-	//在搜索数据库，判断是否存在该用户
-	if model.DB.Model(&model.Student{}).Where("uid = ?", service.UID).Count(&count); count > 0 {
-		return serializer.ParamErr("该用户已注册", nil)
-	}
+	res, _ := model.DB2.Query("select wx_uid from wx_mp_bind_info where wx_uid = ? and org_id = ? and username = ? and isbind = 1", service.UID, service.Corpid, service.Name)
 
-	count = 0
-	//在搜索数据库，判断是否存在该用户
-	if model.DB.Model(&model.Student{}).Where("user_id = ?", service.UserID).Count(&count); count > 0 {
-		return serializer.ParamErr("该昵称已被占用", nil)
+	if res.Next() {
+		return serializer.BuildIsRegisteredResponse(0, 1)
+	} else {
+		res, _ := model.DB2.Query("select org_id from wx_mp_bind_info where wx_uid = ? and username = ? and isbind = 1", service.UID, service.Name)
+		if res.Next() {
+			return serializer.Err(100020, "本微信已经绑定其他机构，不能重复绑定", nil)
+		}
+		result := model.DB2.QueryRow("insert into wx_mp_bind_info(wx_uid,org_id,username,isbind) values(?,?,?,1)", service.UID, service.Corpid, service.Name)
+		if result == nil {
+			return serializer.Err(50001, "注册失败", nil)
+		}
+		result = model.DB2.QueryRow("update wx_mp_user set userid=?, name=?, phone_num=? where wid=?", service.UserID, service.Name, service.PhoneNum, service.UID)
+		if result == nil {
+			return serializer.Err(50001, "用户更新失败", nil)
+		}
 	}
-
-	user := model.Student{
-		Name:         service.Name,
-		PhoneNum:     service.PhoneNum,
-		UID:          service.UID,
-		UserID:       service.UserID,
-		Corpid:       service.Corpid,
-		IsRegistered: 1,
-		Password:     "password",
-	}
-
-	// 用户信息存库
-	if err := model.DB.Create(&user).Error; err != nil {
-		return serializer.ParamErr("注册失败", err)
-	}
-
-	return serializer.BuildIsRegisteredResponse(0,1)
+	return serializer.BuildIsRegisteredResponse(0, 1)
 }
