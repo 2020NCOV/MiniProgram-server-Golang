@@ -4,6 +4,7 @@ import "Miniprogram-server-Golang/model"
 
 // UserInfo 用户数据序列化器
 type UserInfo struct {
+	ErrCode      int    `json:"errcode"`
 	Name         string `json:"name"`
 	PhoneNum     string `json:"phone_num"`
 	UserID       string `json:"userid"`
@@ -16,6 +17,7 @@ type UserInfo struct {
 // BuildUserInfo 序列化
 func BuildUserInfo(user model.Student, corp model.Corp) UserInfo {
 	return UserInfo{
+		ErrCode:      0,
 		Name:         user.Name,
 		PhoneNum:     user.PhoneNum,
 		UserID:       user.UserID,
