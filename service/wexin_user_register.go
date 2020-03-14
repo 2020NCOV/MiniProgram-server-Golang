@@ -39,9 +39,9 @@ func (service *WeixinUserRegister) UserRegister(c *gin.Context) serializer.Respo
 		return serializer.ParamErr("参数错误:token", nil)
 	}
 
-	// if !model.CheckToken(service.UID, service.Token) {
-	// 	return serializer.ParamErr("token验证错误", nil)
-	// }
+	if !model.CheckToken(service.UID, service.Token) {
+		return serializer.ParamErr("token验证错误", nil)
+	}
 
 	res, _ := model.DB2.Query("select wx_uid from wx_mp_bind_info where wx_uid = ? and org_id = ? and username = ? and isbind = 1", service.UID, service.Corpid, service.Name)
 

@@ -88,7 +88,7 @@ func BuildCorpResponse(errCode int, corp model.Corp) Response {
 	}
 }
 
-//
+//BuildCorpResponse 序列化IsRegistered响应
 func BuildIsRegistered(errcode int, is_registered int) IsRegistered {
 	return IsRegistered{
 		ErrCode:      errcode,
