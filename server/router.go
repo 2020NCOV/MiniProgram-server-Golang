@@ -1,8 +1,9 @@
 package server
 
 import (
-	"github.com/gin-gonic/gin"
 	"Miniprogram-server-Golang/api"
+
+	"github.com/gin-gonic/gin"
 )
 
 func NewRouter() *gin.Engine {
@@ -33,6 +34,7 @@ func NewRouter() *gin.Engine {
 
 		//用户解绑
 		v1.POST("/unbind", api.UserUnBind)
+
 	}
 
 	// 路由，用户上传信息接口
@@ -50,6 +52,9 @@ func NewRouter() *gin.Engine {
 	{
 		//获取用户信息
 		v3.POST("/getmyinfo", api.GetUserInfo)
+
+		//检查用户绑定信息
+		v3.POST("/getbindinfo", api.GetBindInfo)
 	}
 
 	return router
