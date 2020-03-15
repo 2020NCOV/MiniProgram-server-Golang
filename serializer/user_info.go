@@ -8,7 +8,7 @@ type UserInfo struct {
 	Name         string `json:"name"`
 	PhoneNum     string `json:"phone_num"`
 	UserID       string `json:"userid"`
-	TemplateCode string `json:"template_code"`
+	TemplateCode string `json:"bind_corp_template_code"`
 	Corpname     string `json:"corpname"`
 	TypeCorpname string `json:"type_corpname"`
 	TypeUsername string `json:"type_username"`
