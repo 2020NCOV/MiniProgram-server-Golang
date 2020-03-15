@@ -14,7 +14,7 @@ type CheckIsRegisteredService struct {
 	UID    string `form:"uid" json:"uid" binding:"required"`
 	Token  string `form:"token" json:"token" binding:"required"`
 }
-
+	var orgid string
 // IsRegistered 判断用户是否注册过
 func (service *CheckIsRegisteredService) IsRegistered(c *gin.Context) serializer.Response {
 
@@ -23,8 +23,7 @@ func (service *CheckIsRegisteredService) IsRegistered(c *gin.Context) serializer
 	}
 
 	//到organization表中查找是否有该企业
-
-	var orgid string
+	//var orgid string
 	if err := model.DB2.QueryRow("select id from organization where corp_code =?", service.Corpid).Scan(&orgid); err != nil || orgid == "" {
 		return serializer.Err(10006, "获取企业信息失败", nil)
 	}

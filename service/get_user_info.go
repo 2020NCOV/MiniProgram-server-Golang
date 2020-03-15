@@ -14,7 +14,7 @@ type GetInfoService struct {
 	Token  string `form:"token" json:"token" binding:"required"`
 	Corpid string `form:"corpid" json:"corpid" binding:"required"`
 }
-
+var user model.Student
 // GetMyInfo 获取用户数据
 func (service *GetInfoService) GetMyInfo(c *gin.Context) serializer.Response {
 	if !model.CheckToken(strconv.Itoa(service.UID), service.Token) {
@@ -30,7 +30,7 @@ func (service *GetInfoService) GetMyInfo(c *gin.Context) serializer.Response {
 	}
 
 	// 获取用户信息
-	var user model.Student
+	//var user model.Student
 	err = model.DB2.QueryRow("select userid,name,phone_num from wx_mp_user where wid = ?", service.UID).
 		Scan(&user.UserID, &user.Name, &user.PhoneNum)
 	if err != nil {
