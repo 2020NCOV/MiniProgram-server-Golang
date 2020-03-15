@@ -9,35 +9,16 @@ import (
 
 // WeixinUserRegister CheckIsRegisteredService 管理用户注册服务
 type WeixinUserRegister struct {
-	UserID   string `form:"userid" json:"userid"`
-	Corpid   string `form:"corpid" json:"corpid"`
-	UID      string `form:"uid" json:"uid"`
-	Token    string `form:"token" json:"token"`
-	Name     string `form:"name" json:"name"`
-	PhoneNum string `form:"phone_num" json:"phone_num"`
+	UserID   string `form:"userid" json:"userid" binding:"required"`
+	Corpid   string `form:"corpid" json:"corpid" binding:"required"`
+	UID      string `form:"uid" json:"uid" binding:"required"`
+	Token    string `form:"token" json:"token" binding:"required"`
+	Name     string `form:"name" json:"name" binding:"required"`
+	PhoneNum string `form:"phone_num" json:"phone_num" binding:"required"`
 }
 
 // UserRegister isRegistered 判断用户是否注册过
 func (service *WeixinUserRegister) UserRegister(c *gin.Context) serializer.Response {
-
-	if service.Name == "" {
-		return serializer.ParamErr("参数错误:name", nil)
-	}
-	if service.PhoneNum == "" {
-		return serializer.ParamErr("参数错误:phonenum", nil)
-	}
-	if service.UID == "" {
-		return serializer.ParamErr("参数错误:uid", nil)
-	}
-	if service.UserID == "" {
-		return serializer.ParamErr("参数错误:userid", nil)
-	}
-	if service.Corpid == "" {
-		return serializer.ParamErr("参数错误:corpid", nil)
-	}
-	if service.Token == "" {
-		return serializer.ParamErr("参数错误:token", nil)
-	}
 
 	if !model.CheckToken(service.UID, service.Token) {
 		return serializer.ParamErr("token验证错误", nil)
