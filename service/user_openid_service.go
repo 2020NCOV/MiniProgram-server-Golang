@@ -27,25 +27,23 @@ func (service *UserOpenIDService) GetCode(c *gin.Context) serializer.Response {
 		return serializer.ParamErr("小程序报错", err)
 	}
 
-	info := model.Code{
-		UID:   res.OpenID,
-		Token: res.SessionKey,
-		Code:  service.Code,
-	}
-
 	//查看数据库中是否已有token信息
-	err = model.DB2.QueryRow("select openid, token from wx_mp_user where openid = ?,  token  = ?", res.OpenID, res.SessionKey).
-		Scan(&res.OpenID, &res.SessionKey)
-	if err != nil {
-		return serializer.Err(1008, "获取请求失败，请退出重试", nil)
-	}
-	//如果没有，重新存入并返回
-	err = model.DB2.QueryRow("insert into wx_mp_user(openid, token)values(?,?)", res.OpenID, res.SessionKey)
-	if err != nil {
-		return serializer.BuildStatusResponse(res.SessionKey, res.OpenID, 1, 0)
-	}
+	var wid int64
+	var token string
+	//err = model.DB2.QueryRow("select wid from wx_mp_user where wid = ?", UID).Scan(&wid)
+	err = model.DB2.QueryRow("select wid, token from wx_mp_user where openid = ?", res.OpenID).
+		Scan(&wid, &token)
 
-	return serializer.BuildStatusResponse(info)
+	if err != nil {
+	//如果没有，重新存入并返回
+		result, err2 := model.DB2.Exec("insert into wx_mp_user(openid, token) values(?,?)", res.OpenID, res.SessionKey)
+		var err3 error
+		wid, err3 = result.LastInsertId()
+		if err2 != nil || err3 != nil{
+			return serializer.Err(1008, "获取请求失败，请退出重试", nil)
+		}
+	}
+	return serializer.BuildStatusResponse(token, wid, 1, 0)
 }
 
 
