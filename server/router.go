@@ -29,9 +29,6 @@ func NewRouter() *gin.Engine {
 		//获取公司模板
 		v1.POST("/getcorpname", api.GetCorp)
 
-		//绑定用户
-		v1.POST("/bind", api.UserBind)
-
 		//用户解绑
 		v1.POST("/unbind", api.UserUnBind)
 

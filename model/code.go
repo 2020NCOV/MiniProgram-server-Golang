@@ -1,12 +1,7 @@
 package model
 
-import (
-	"github.com/jinzhu/gorm"
-)
-
 // Code 记录用户token信息
 type Code struct {
-	gorm.Model
 	UID   string
 	Token string
 	Code  string
@@ -19,6 +14,6 @@ func CheckToken(uid string, token string) bool {
 	if !res.Next() {
 		return false
 	}
-	
+
 	return true
 }
