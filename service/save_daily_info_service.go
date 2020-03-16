@@ -70,7 +70,7 @@ func (service *SaveDailyInfoService) SaveDailyInfo(c *gin.Context) serializer.Re
 		if _, err := model.DB2.Exec(queryStr, service.Data.IsReturnSchool, service.Data.CurrentHealthValue, service.Data.CurrentContagionRiskValue,
 			service.Data.CurrentDistrictValue, service.Data.CurrentTemperature, service.Data.Remarks,
 			service.Data.PsyStatus, service.Data.PsyDemand, service.Data.PsyKnowledge,
-			sql.NullString{service.Data.ReturnTime, CheckValid(service.Data.ReturnTime)},
+			sql.NullString{String: service.Data.ReturnTime, Valid: CheckValid(service.Data.ReturnTime)},
 			service.UID, time, orgid, orgname, username, userid, service.TemplateCode, service.Data.ReturnDormNum,
 			service.Data.ReturnTrafficInfo); err != nil {
 			return serializer.ParamErr("上传失败", nil)
@@ -90,7 +90,7 @@ func (service *SaveDailyInfoService) SaveDailyInfo(c *gin.Context) serializer.Re
 		if _, err := model.DB2.Exec(queryStr, service.Data.IsReturnSchool, service.Data.CurrentHealthValue, service.Data.CurrentContagionRiskValue,
 			service.Data.CurrentDistrictValue, service.Data.CurrentTemperature, service.Data.Remarks,
 			service.Data.PsyStatus, service.Data.PsyDemand, service.Data.PsyKnowledge,
-			sql.NullString{service.Data.ReturnTime, CheckValid(service.Data.ReturnTime)},
+			sql.NullString{String: service.Data.ReturnTime, Valid: CheckValid(service.Data.ReturnTime)},
 			service.UID, time, orgid, orgname, username, userid, service.TemplateCode, service.Data.ReturnDormNum,
 			service.Data.ReturnTrafficInfo); err != nil {
 			return serializer.ParamErr("上传失败", nil)

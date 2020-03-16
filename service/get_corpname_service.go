@@ -7,14 +7,14 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// GetCorpService 管理用户企业身份服务
+// 管理用户企业身份服务
 type GetCorpService struct {
 	Uid    int    `form:"uid" json:"uid"`
 	Token  string `form:"token" json:"token"`
 	Corpid string `form:"corpid" json:"corpid"`
 }
 
-// GetCorp 获取用户企业信息
+// 获取用户企业信息
 func (service *GetCorpService) GetCorp(c *gin.Context) serializer.Response {
 
 	if !model.CheckToken(service.Uid, service.Token) {

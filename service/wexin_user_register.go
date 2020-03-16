@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// WeixinUserRegister CheckIsRegisteredService 管理用户注册服务
+//  管理用户注册服务
 type WeixinUserRegister struct {
 	UserID   string `form:"userid" json:"userid" binding:"required"`
 	Corpid   string `form:"corpid" json:"corpid" binding:"required"`
@@ -17,7 +17,7 @@ type WeixinUserRegister struct {
 	PhoneNum string `form:"phone_num" json:"phone_num" binding:"required"`
 }
 
-// UserRegister isRegistered 判断用户是否注册过
+// 判断用户是否注册过
 func (service *WeixinUserRegister) UserRegister(c *gin.Context) serializer.Response {
 
 	if !model.CheckToken(service.UID, service.Token) {

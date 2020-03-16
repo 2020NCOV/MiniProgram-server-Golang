@@ -9,7 +9,7 @@ type WeChat struct {
 	OpenID string `gorm:"unique;"`
 }
 
-// Reporter 上报人
+//  上报人
 type Reporter struct {
 	WeChat         WeChat     `gorm:"association_foreignkey:WeChatRefer;unique;type:varchar(200)"`
 	WeChatRefer    string     //对应的微信号
@@ -26,7 +26,7 @@ type Reporter struct {
 -------------------------以下为旧版表------------------------------
 */
 
-// Corp 记录不同机构的不同模板号
+//  记录不同机构的不同模板号
 type Corp struct {
 	Id           int
 	Corpid       string
@@ -36,7 +36,7 @@ type Corp struct {
 	TypeUsername string
 }
 
-// Student 学生
+//  学生
 type Student struct {
 	Name         string
 	PhoneNum     string

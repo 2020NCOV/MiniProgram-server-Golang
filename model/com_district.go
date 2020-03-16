@@ -1,6 +1,6 @@
 package model
 
-// District 记录行政区信息
+//  记录行政区信息
 // **暂用**
 type District struct {
 	Name     string

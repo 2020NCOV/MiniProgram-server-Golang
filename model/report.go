@@ -1,6 +1,6 @@
 package model
 
-// Record 上报记录
+//  上报记录
 type Record struct {
 	Reporter                  Reporter `gorm:"foreign_key:ReporterRefer;"`
 	ReporterRefer             uint     //关联上报人的主键，也就是Reporter.ID

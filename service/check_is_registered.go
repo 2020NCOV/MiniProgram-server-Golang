@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// CheckIsRegisteredService 管理用户注册服务
+// 管理用户注册服务
 type CheckIsRegisteredService struct {
 	Code   string `form:"code" json:"code"`
 	Corpid string `form:"corpid" json:"corpid" binding:"required"`
@@ -15,7 +15,7 @@ type CheckIsRegisteredService struct {
 	Token  string `form:"token" json:"token" binding:"required"`
 }
 
-// IsRegistered 判断用户是否注册过
+// 判断用户是否注册过
 func (service *CheckIsRegisteredService) IsRegistered(c *gin.Context) serializer.Response {
 
 	if !model.CheckToken(service.UID, service.Token) {

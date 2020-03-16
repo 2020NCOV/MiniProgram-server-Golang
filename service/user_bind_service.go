@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-// UserBindService 管理用户注册服务
+// 管理用户注册服务
 type UserBindService struct {
 	UserID   string `form:"userid" json:"userid"`
 	Corpid   string `form:"corpid" json:"corpid"`
@@ -17,7 +17,7 @@ type UserBindService struct {
 	Password string `form:"password" json:"password"`
 }
 
-// UnBind 用户绑定
+// 用户绑定
 func (service *UserBindService) UnBind(c *gin.Context) serializer.Response {
 	if !model.CheckToken(service.UID, service.Token) {
 		// Token 验证失败 此处 is_registered 无意义

@@ -2,7 +2,7 @@ package serializer
 
 import "github.com/gin-gonic/gin"
 
-// Response 基础序列化器
+//  基础序列化器
 type Response struct {
 	Code  int         `json:"errcode"`
 	Data  interface{} `json:"data,omitempty"`
@@ -27,15 +27,7 @@ const (
 	CodeParamErr = 40001
 )
 
-// CheckLogin 检查登录
-func CheckLogin() Response {
-	return Response{
-		Code: CodeCheckLogin,
-		Msg:  "未登录",
-	}
-}
-
-// Err 通用错误处理
+//  通用错误处理
 func Err(errCode int, msg string, err error) Response {
 	res := Response{
 		Code: errCode,
@@ -48,7 +40,7 @@ func Err(errCode int, msg string, err error) Response {
 	return res
 }
 
-// ParamErr 各种参数错误
+// 各种参数错误
 func ParamErr(msg string, err error) Response {
 	if msg == "" {
 		msg = "参数错误"
