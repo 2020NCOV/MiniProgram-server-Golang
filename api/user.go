@@ -119,17 +119,6 @@ func WeixinUsrRegister(c *gin.Context) {
 	}
 }
 
-// UserBind 检查用户是否存在
-func UserBind(c *gin.Context) {
-	var service service.UserBindService
-	if err := c.ShouldBind(&service); err == nil {
-		res := service.Bind(c)
-		c.JSON(200, res)
-	} else {
-		c.JSON(200, ErrorResponse(err))
-	}
-}
-
 // UserUnBind 检查用户是否存在
 func UserUnBind(c *gin.Context) {
 	var service service.UserBindService

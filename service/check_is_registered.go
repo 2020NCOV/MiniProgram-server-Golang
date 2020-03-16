@@ -11,9 +11,10 @@ import (
 type CheckIsRegisteredService struct {
 	Code   string `form:"code" json:"code"`
 	Corpid string `form:"corpid" json:"corpid" binding:"required"`
-	UID    string `form:"uid" json:"uid" binding:"required"`
+	UID    int    `form:"uid" json:"uid" binding:"required"`
 	Token  string `form:"token" json:"token" binding:"required"`
 }
+
 // IsRegistered 判断用户是否注册过
 func (service *CheckIsRegisteredService) IsRegistered(c *gin.Context) serializer.Response {
 

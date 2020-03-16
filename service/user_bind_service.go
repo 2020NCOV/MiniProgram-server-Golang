@@ -12,28 +12,9 @@ import (
 type UserBindService struct {
 	UserID   string `form:"userid" json:"userid"`
 	Corpid   string `form:"corpid" json:"corpid"`
-	UID      string `form:"uid" json:"uid"`
+	UID      int    `form:"uid" json:"uid"`
 	Token    string `form:"token" json:"token"`
 	Password string `form:"password" json:"password"`
-}
-
-// Bind 用户绑定
-func (service *UserBindService) Bind(c *gin.Context) serializer.Response {
-	if !model.CheckToken(service.UID, service.Token) {
-		return serializer.ParamErr("token验证错误", nil)
-	}
-
-	//在搜索数据库，判断是否存在该用户
-	count := 0
-	if model.DB.Model(&model.Student{}).Where(&model.Student{UID: service.UID, Password: service.Password}).Count(&count); count == 0 {
-		return serializer.BuildIsRegisteredResponse(0, 0)
-	}
-	var student model.Student
-	model.DB.Where("uid = ?", service.UID).First(&student)
-	student.IsRegistered = 2
-	model.DB.Save(&student)
-
-	return serializer.BuildIsRegisteredResponse(0, 2)
 }
 
 // UnBind 用户绑定
