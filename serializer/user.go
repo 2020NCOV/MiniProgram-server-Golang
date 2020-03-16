@@ -10,17 +10,6 @@ type Status struct {
 	ErrCode      int    `json:"errcode"`
 }
 
-// 用户序列化器
-type Student struct {
-	UID          string `json:"uid"`
-	Name         string `json:"name"`
-	PhoneNum     string `json:"phone_num"`
-	UserID       string `json:"userid"`
-	Corpname     string `json:"corpname"`
-	TypeCorpname string `json:"type_corpname"`
-	TypeUsername string `json:"type_username"`
-}
-
 // 表单模板序列化器
 type Corp struct {
 	ErrCode      int    `json:"errcode"`
