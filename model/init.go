@@ -10,7 +10,7 @@ import (
 // DB2 适配其他版本的数据库连接实例
 var DB2 *sql.DB
 
-// Database 创建数据库连接实例
+//  创建数据库连接实例
 func Database(conString string, conString2 string) {
 	db2, err := sql.Open("mysql", conString2)
 

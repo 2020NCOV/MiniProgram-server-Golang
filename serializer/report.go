@@ -2,7 +2,7 @@ package serializer
 
 import "Miniprogram-server-Golang/model"
 
-// Record 用户序列化器
+// 用户序列化器
 type Record struct {
 	IsReturnSchool            int    `json:"is_return_school"`
 	CurrentHealthValue        int    `json:"current_health_value"`
@@ -22,14 +22,14 @@ type Record struct {
 	CurrentDistrictPath       string `json:"current_district_path"`
 }
 
-// ResponseData 生成返回消息体
+// 生成返回消息体
 type ResponseData struct {
 	Errcode int         `json:"errcode"`
 	IsEmpty int         `json:"isEmpty"`
 	Data    interface{} `json:"data"`
 }
 
-// BuildRecord 序列化report
+//  序列化report
 func BuildRecord(record model.Record) Record {
 	return Record{
 		IsReturnSchool:            record.IsReturnSchool,
@@ -51,14 +51,14 @@ func BuildRecord(record model.Record) Record {
 	}
 }
 
-// BuildSuccessSave 相应上传成功
+//  相应上传成功
 func BuildSuccessSave() Response {
 	return Response{
 		Msg: "上传成功",
 	}
 }
 
-// BuildLastDataResponse 序列化响应
+//  序列化响应
 func BuildLastDataResponse(isEmpty bool, record model.Record) Response {
 	if isEmpty {
 		return Response{

@@ -2,7 +2,7 @@ package serializer
 
 import "Miniprogram-server-Golang/model"
 
-// UserInfo 用户数据序列化器
+//  用户数据序列化器
 type UserInfo struct {
 	ErrCode      int    `json:"errcode"`
 	Name         string `json:"name"`
@@ -14,7 +14,7 @@ type UserInfo struct {
 	TypeUsername string `json:"type_username"`
 }
 
-// BuildUserInfo 序列化
+//  序列化
 func BuildUserInfo(user model.Student, corp model.Corp) UserInfo {
 	return UserInfo{
 		ErrCode:      0,
@@ -28,7 +28,7 @@ func BuildUserInfo(user model.Student, corp model.Corp) UserInfo {
 	}
 }
 
-// BuildUserInfoResponse 序列化用户信息响应
+//  序列化用户信息响应
 func BuildUserInfoResponse(user model.Student, corp model.Corp) Response {
 	return Response{
 		Data: BuildUserInfo(user, corp),

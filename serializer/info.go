@@ -1,18 +1,18 @@
 package serializer
 
-// isRegistered 用户序列化器
+//  用户序列化器
 type BindInfo struct {
-	ErrCode	int	`json:"errcode"`
-	IsBind	int	`json:"is_bind"`
-	CorpCode	string	`json:"corp_code"`
+	ErrCode  int    `json:"errcode"`
+	IsBind   int    `json:"is_bind"`
+	CorpCode string `json:"corp_code"`
 }
 
-// BuildBindInfo 序列化
+//  序列化
 func BuildBindInfo(errCode int, isBind int, corpCode string) BindInfo {
 	return BindInfo{
-		ErrCode:errCode,
-		IsBind:isBind,
-		CorpCode:corpCode,
+		ErrCode:  errCode,
+		IsBind:   isBind,
+		CorpCode: corpCode,
 	}
 }
 

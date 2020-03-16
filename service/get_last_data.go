@@ -8,13 +8,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// GetLastDataService 管理获取表单数据服务
+// 管理获取表单数据服务
 type GetLastDataService struct {
 	UID   int    `form:"uid" json:"uid"`
 	Token string `form:"token" json:"token"`
 }
 
-// GetLastData 获取上次提交的数据
+// 获取上次提交的数据
 func (service *GetLastDataService) GetLastData(c *gin.Context) serializer.Response {
 
 	if !model.CheckToken(service.UID, service.Token) {
