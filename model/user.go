@@ -33,6 +33,7 @@ type Reporter struct {
 // Corp 记录不同机构的不同模板号
 type Corp struct {
 	gorm.Model
+	Id           int
 	Corpid       string
 	TemplateCode string
 	Corpname     string

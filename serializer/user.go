@@ -4,10 +4,10 @@ import "Miniprogram-server-Golang/model"
 
 // Status 状态
 type Status struct {
-	UID   string `json:"uid"`
-	Token string `json:"token"`
-	IsRegistered int `json:"is_registered"`
-	ErrCode int `json:"errcode"`
+	UID          string `json:"uid"`
+	Token        string `json:"token"`
+	IsRegistered int    `json:"is_registered"`
+	ErrCode      int    `json:"errcode"`
 }
 
 // Student 用户序列化器
@@ -29,6 +29,7 @@ type Corp struct {
 	TypeCorpname string `json:"type_corpname"`
 	TypeUsername string `json:"type_username"`
 	TemplateCode string `json:"template_code"`
+	Depid        int    `json:"depid"`
 }
 
 // IsRegistered 用户序列化器
@@ -65,6 +66,7 @@ func BuildCorp(errCode int, corp model.Corp) Corp {
 		TypeCorpname: corp.TypeCorpname,
 		TypeUsername: corp.TypeUsername,
 		TemplateCode: corp.TemplateCode,
+		Depid:        corp.Id,
 	}
 }
 
@@ -79,10 +81,10 @@ func BuildStatus(info model.Code) Status {
 // BuildStatusResponse 序列化status响应，返回token、uid等信息
 func BuildStatusResponse(token string, uid string, isRegistered int, errcode int) Response {
 	return Response{
-		Token: token,
-		UID: uid,
+		Token:        token,
+		UID:          uid,
 		IsRegistered: isRegistered,
-		ErrCode: errcode,
+		ErrCode:      errcode,
 	}
 }
 
