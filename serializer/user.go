@@ -29,18 +29,19 @@ type Corp struct {
 	TypeCorpname string `json:"type_corpname"`
 	TypeUsername string `json:"type_username"`
 	TemplateCode string `json:"template_code"`
+	Depid        int    `json:"depid"`
 }
 
 // IsRegistered 用户序列化器
 type IsRegistered struct {
 	//php代码和api中还有errcode参数
-	ErrCode      int    `json:"errcode"`
+	ErrCode      int `json:"errcode"`
 	IsRegistered int `json:"is_registered"`
 }
 
 // CheckUser 检查
 type CheckUser struct {
-	ErrCode int	   `json:"errcode"`
+	ErrCode int    `json:"errcode"`
 	UserID  string `json:"userid"`
 	CorpID  string `json:"corpid"`
 	IsExist int    `json:"is_exist"`
@@ -65,6 +66,7 @@ func BuildCorp(errCode int, corp model.Corp) Corp {
 		TypeCorpname: corp.TypeCorpname,
 		TypeUsername: corp.TypeUsername,
 		TemplateCode: corp.TemplateCode,
+		Depid:        corp.Id,
 	}
 }
 
@@ -82,7 +84,6 @@ func BuildStatus(token string, uid int64, isRegistered int, errcode int) Status 
 func BuildStatusResponse(token string, uid int64, isRegistered int, errcode int) Response {
 	return Response{
 		Data: BuildStatus(token, uid, isRegistered, errcode),
-
 	}
 }
 
@@ -93,10 +94,18 @@ func BuildCorpResponse(errCode int, corp model.Corp) Response {
 	}
 }
 
+//BuildCorpResponse 序列化IsRegistered响应
+func BuildIsRegistered(errcode int, is_registered int) IsRegistered {
+	return IsRegistered{
+		ErrCode:      errcode,
+		IsRegistered: is_registered,
+	}
+}
+
 // BuildIsRegisteredResponse 序列化用户注册响应
-func BuildIsRegisteredResponse(errcode int,is_registered int) Response {
+func BuildIsRegisteredResponse(errcode int, is_registered int) Response {
 	return Response{
-		Data:IsRegistered {ErrCode: errcode,IsRegistered: is_registered},
+		Data: BuildIsRegistered(errcode, is_registered),
 	}
 }
 

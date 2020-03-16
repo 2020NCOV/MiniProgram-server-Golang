@@ -109,7 +109,11 @@ func WeixinUsrRegister(c *gin.Context) {
 	var service service.WeixinUserRegister
 	if err := c.ShouldBind(&service); err == nil {
 		res := service.UserRegister(c)
-		c.JSON(200, res)
+		if res.Data != nil {
+			c.JSON(200, res.Data)
+		} else {
+			c.JSON(200, res)
+		}
 	} else {
 		c.JSON(200, ErrorResponse(err))
 	}

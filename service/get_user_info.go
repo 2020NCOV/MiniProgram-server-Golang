@@ -10,17 +10,12 @@ import (
 
 // GetInfoService 管理获取用户数据服务
 type GetInfoService struct {
-	UID    int    `form:"uid" json:"uid"`
-	Token  string `form:"token" json:"token"`
-	Corpid string `form:"corpid" json:"corpid"`
+	UID    int    `form:"uid" json:"uid" binding:"required"`
+	Token  string `form:"token" json:"token" binding:"required"`
+	Corpid string `form:"corpid" json:"corpid" binding:"required"`
 }
-
 // GetMyInfo 获取用户数据
 func (service *GetInfoService) GetMyInfo(c *gin.Context) serializer.Response {
-	// 处理参数错误
-	if service.Corpid == "" {
-		return serializer.Err(1003, "参数错误:corpid", nil)
-	}
 	if !model.CheckToken(strconv.Itoa(service.UID), service.Token) {
 		return serializer.ParamErr("token验证错误", nil)
 	}
