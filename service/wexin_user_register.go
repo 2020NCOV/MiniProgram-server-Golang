@@ -11,7 +11,7 @@ import (
 type WeixinUserRegister struct {
 	UserID   string `form:"userid" json:"userid" binding:"required"`
 	Corpid   string `form:"corpid" json:"corpid" binding:"required"`
-	UID      string `form:"uid" json:"uid" binding:"required"`
+	UID      int    `form:"uid" json:"uid" binding:"required"`
 	Token    string `form:"token" json:"token" binding:"required"`
 	Name     string `form:"name" json:"name" binding:"required"`
 	PhoneNum string `form:"phone_num" json:"phone_num" binding:"required"`

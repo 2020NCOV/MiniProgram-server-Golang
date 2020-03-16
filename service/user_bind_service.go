@@ -12,7 +12,7 @@ import (
 type UserBindService struct {
 	UserID   string `form:"userid" json:"userid"`
 	Corpid   string `form:"corpid" json:"corpid"`
-	UID      string `form:"uid" json:"uid"`
+	UID      int    `form:"uid" json:"uid"`
 	Token    string `form:"token" json:"token"`
 	Password string `form:"password" json:"password"`
 }

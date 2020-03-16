@@ -9,7 +9,7 @@ import (
 
 // GetCorpService 管理用户企业身份服务
 type GetCorpService struct {
-	Uid    string `form:"uid" json:"uid"`
+	Uid    int    `form:"uid" json:"uid"`
 	Token  string `form:"token" json:"token"`
 	Corpid string `form:"corpid" json:"corpid"`
 }

@@ -4,7 +4,6 @@ import (
 	"Miniprogram-server-Golang/model"
 	"Miniprogram-server-Golang/serializer"
 	"log"
-	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -18,7 +17,7 @@ type GetLastDataService struct {
 // GetLastData 获取上次提交的数据
 func (service *GetLastDataService) GetLastData(c *gin.Context) serializer.Response {
 
-	if !model.CheckToken(strconv.Itoa(service.UID), service.Token) {
+	if !model.CheckToken(service.UID, service.Token) {
 		return serializer.ParamErr("token验证错误", nil)
 	}
 

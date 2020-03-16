@@ -3,7 +3,6 @@ package service
 import (
 	"Miniprogram-server-Golang/model"
 	"Miniprogram-server-Golang/serializer"
-	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -14,9 +13,10 @@ type GetInfoService struct {
 	Token  string `form:"token" json:"token" binding:"required"`
 	Corpid string `form:"corpid" json:"corpid" binding:"required"`
 }
+
 // GetMyInfo 获取用户数据
 func (service *GetInfoService) GetMyInfo(c *gin.Context) serializer.Response {
-	if !model.CheckToken(strconv.Itoa(service.UID), service.Token) {
+	if !model.CheckToken(service.UID, service.Token) {
 		return serializer.ParamErr("token验证错误", nil)
 	}
 
