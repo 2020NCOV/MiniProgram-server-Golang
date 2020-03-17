@@ -30,13 +30,13 @@ func (service *UserOpenIDService) GetCode(c *gin.Context) serializer.Response {
 	//查看数据库中是否已有token信息
 	var wid int64
 	var token string
-	//err = model.DB2.QueryRow("select wid from wx_mp_user where wid = ?", UID).Scan(&wid)
-	err = model.DB2.QueryRow("select wid, token from wx_mp_user where openid = ?", res.OpenID).
+	//err = model.DB.QueryRow("select wid from wx_mp_user where wid = ?", UID).Scan(&wid)
+	err = model.DB.QueryRow("select wid, token from wx_mp_user where openid = ?", res.OpenID).
 		Scan(&wid, &token)
 
 	if err != nil {
 		//如果没有，重新存入并返回
-		result, err2 := model.DB2.Exec("insert into wx_mp_user(openid, token) values(?,?)", res.OpenID, res.SessionKey)
+		result, err2 := model.DB.Exec("insert into wx_mp_user(openid, token) values(?,?)", res.OpenID, res.SessionKey)
 		var err3 error
 		wid, err3 = result.LastInsertId()
 		if err2 != nil || err3 != nil {

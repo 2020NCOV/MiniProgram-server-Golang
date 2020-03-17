@@ -22,7 +22,7 @@ func (service *GetInfoService) GetMyInfo(c *gin.Context) serializer.Response {
 
 	// 获取传递参数的企业信息
 	var corp model.Corp
-	err := model.DB2.QueryRow("select corpname,template_code,type_corpname,type_username from organization where corp_code = ?", service.Corpid).
+	err := model.DB.QueryRow("select corpname,template_code,type_corpname,type_username from organization where corp_code = ?", service.Corpid).
 		Scan(&corp.Corpname, &corp.TemplateCode, &corp.TypeCorpname, &corp.TypeUsername)
 	if err != nil {
 		return serializer.Err(10006, "获取企业信息失败", nil)
@@ -30,7 +30,7 @@ func (service *GetInfoService) GetMyInfo(c *gin.Context) serializer.Response {
 
 	// 获取用户信息
 	var user model.Student
-	err = model.DB2.QueryRow("select userid,name,phone_num from wx_mp_user where wid = ?", service.UID).
+	err = model.DB.QueryRow("select userid,name,phone_num from wx_mp_user where wid = ?", service.UID).
 		Scan(&user.UserID, &user.Name, &user.PhoneNum)
 	if err != nil {
 		return serializer.Err(1005, "获取用户信息失败", nil)

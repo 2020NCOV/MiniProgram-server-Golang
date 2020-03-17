@@ -7,16 +7,16 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/mysql" //
 )
 
-// DB2 适配其他版本的数据库连接实例
-var DB2 *sql.DB
+// DB 适配其他版本的数据库连接实例
+var DB *sql.DB
 
 //  创建数据库连接实例
-func Database(conString string, conString2 string) {
-	db2, err := sql.Open("mysql", conString2)
+func Database(conString string) {
+	db, err := sql.Open("mysql", conString)
 
 	if err != nil {
-		panic("fail to connect database2")
+		panic("fail to connect database")
 	}
 
-	DB2 = db2
+	DB = db
 }
