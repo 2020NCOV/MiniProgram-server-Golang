@@ -24,13 +24,13 @@ func (service *CheckIsRegisteredService) IsRegistered(c *gin.Context) serializer
 
 	//到organization表中查找是否有该企业
 	var orgid string
-	if err := model.DB2.QueryRow("select id from organization where corp_code =?", service.Corpid).Scan(&orgid); err != nil || orgid == "" {
+	if err := model.DB.QueryRow("select id from organization where corp_code =?", service.Corpid).Scan(&orgid); err != nil || orgid == "" {
 		return serializer.Err(10006, "获取企业信息失败", nil)
 	}
 
 	////到wx_mp_bind_info表中查找是否有绑定信息
 	var bindid string
-	if err := model.DB2.QueryRow("select id from wx_mp_bind_info where org_id =? and wx_uid =? and isbind =?", orgid, service.UID, 1).Scan(&bindid); err != nil || bindid == "" {
+	if err := model.DB.QueryRow("select id from wx_mp_bind_info where org_id =? and wx_uid =? and isbind =?", orgid, service.UID, 1).Scan(&bindid); err != nil || bindid == "" {
 		return serializer.BuildIsRegisteredResponse(0, 0)
 	} else {
 		return serializer.BuildIsRegisteredResponse(0, 1)

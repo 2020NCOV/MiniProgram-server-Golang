@@ -48,16 +48,16 @@ func (service *SaveDailyInfoService) SaveDailyInfo(c *gin.Context) serializer.Re
 	}
 	//查找用户绑定信息
 	var orgid, orgname, username, userid string
-	err := model.DB2.QueryRow("select org_id from wx_mp_bind_info where wx_uid =? ", service.UID).Scan(&orgid)
-	err = model.DB2.QueryRow("select corpname from organization where id=?", orgid).Scan(&orgname)
-	err = model.DB2.QueryRow("select name,userid from wx_mp_user where wid =? ", service.UID).Scan(&username, &userid)
+	err := model.DB.QueryRow("select org_id from wx_mp_bind_info where wx_uid =? ", service.UID).Scan(&orgid)
+	err = model.DB.QueryRow("select corpname from organization where id=?", orgid).Scan(&orgname)
+	err = model.DB.QueryRow("select name,userid from wx_mp_user where wid =? ", service.UID).Scan(&username, &userid)
 	//count 用于判断是否重复提交
 	count := 0
 	var time = time.Now().Format("2006-01-02")
 	if service.TemplateCode == "default" {
 		//学生
 		//判断是否重复提交
-		err = model.DB2.QueryRow("select count(*) from report_record_default where userID =? and time = ?", userid, time).Scan(&count)
+		err = model.DB.QueryRow("select count(*) from report_record_default where userID =? and time = ?", userid, time).Scan(&count)
 		if count > 0 && err == nil {
 			return serializer.ParamErr("今日您已提交，请勿重复提交", nil)
 		}
@@ -67,7 +67,7 @@ func (service *SaveDailyInfoService) SaveDailyInfo(c *gin.Context) serializer.Re
 			"current_district_value,current_temperature,remarks,psy_status,psy_demand,psy_knowledge,return_time," +
 			"wxuid,time,org_id,org_name,name,userID,template_code,return_dorm_num,return_traffic_info)" +
 			"values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
-		if _, err := model.DB2.Exec(queryStr, service.Data.IsReturnSchool, service.Data.CurrentHealthValue, service.Data.CurrentContagionRiskValue,
+		if _, err := model.DB.Exec(queryStr, service.Data.IsReturnSchool, service.Data.CurrentHealthValue, service.Data.CurrentContagionRiskValue,
 			service.Data.CurrentDistrictValue, service.Data.CurrentTemperature, service.Data.Remarks,
 			service.Data.PsyStatus, service.Data.PsyDemand, service.Data.PsyKnowledge,
 			sql.NullString{String: service.Data.ReturnTime, Valid: CheckValid(service.Data.ReturnTime)},
@@ -78,7 +78,7 @@ func (service *SaveDailyInfoService) SaveDailyInfo(c *gin.Context) serializer.Re
 		//企业员工
 	} else {
 		//判断是否重复提交
-		err = model.DB2.QueryRow("select count(*) from report_record_company where userID =? and time = ?", userid, time).Scan(&count)
+		err = model.DB.QueryRow("select count(*) from report_record_company where userID =? and time = ?", userid, time).Scan(&count)
 		if count > 0 && err == nil {
 			return serializer.ParamErr("今日您已提交，请勿重复提交", nil)
 		}
@@ -87,7 +87,7 @@ func (service *SaveDailyInfoService) SaveDailyInfo(c *gin.Context) serializer.Re
 			"current_district_value,current_temperature,remarks,psy_status,psy_demand,psy_knowledge,return_time," +
 			"wxuid,time,org_id,org_name,name,userID,template_code,return_dorm_num,return_traffic_info)" +
 			"values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
-		if _, err := model.DB2.Exec(queryStr, service.Data.IsReturnSchool, service.Data.CurrentHealthValue, service.Data.CurrentContagionRiskValue,
+		if _, err := model.DB.Exec(queryStr, service.Data.IsReturnSchool, service.Data.CurrentHealthValue, service.Data.CurrentContagionRiskValue,
 			service.Data.CurrentDistrictValue, service.Data.CurrentTemperature, service.Data.Remarks,
 			service.Data.PsyStatus, service.Data.PsyDemand, service.Data.PsyKnowledge,
 			sql.NullString{String: service.Data.ReturnTime, Valid: CheckValid(service.Data.ReturnTime)},

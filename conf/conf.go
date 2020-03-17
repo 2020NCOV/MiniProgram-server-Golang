@@ -13,5 +13,5 @@ func Init() {
 	godotenv.Load()
 
 	//连接数据库
-	model.Database(os.Getenv("MYSQL_DSN"), os.Getenv("MYSQL_DSN2"))
+	model.Database(os.Getenv("MYSQL_DSN"))
 }

@@ -25,7 +25,7 @@ func (service *UserBindService) UnBind(c *gin.Context) serializer.Response {
 	}
 	// 再搜索数据库，修改注册状态
 	var isRegistered int
-	err := model.DB2.QueryRow("SELECT isbind FROM wx_mp_bind_info WHERE wx_uid = ?", service.UID).Scan(&isRegistered)
+	err := model.DB.QueryRow("SELECT isbind FROM wx_mp_bind_info WHERE wx_uid = ?", service.UID).Scan(&isRegistered)
 	if err != nil {
 		// 无该用户 根据 PHP 代码此处返回 errcode: 0 is_registered: 0
 		if err == sql.ErrNoRows {
@@ -35,7 +35,7 @@ func (service *UserBindService) UnBind(c *gin.Context) serializer.Response {
 			return serializer.BuildIsRegisteredResponse(serializer.CodeDBError, 0)
 		}
 	}
-	rows, err := model.DB2.Exec("UPDATE wx_mp_bind_info SET isbind = ? , unbind_date = ? WHERE wx_uid = ?;", "0", time.Now(), service.UID)
+	rows, err := model.DB.Exec("UPDATE wx_mp_bind_info SET isbind = ? , unbind_date = ? WHERE wx_uid = ?;", "0", time.Now(), service.UID)
 	_ = rows
 	if err != nil {
 		// 此处为其它数据库错误 小程序并未做针对处理 此处 is_registered 无意义
