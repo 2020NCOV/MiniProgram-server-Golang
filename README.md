@@ -2,7 +2,9 @@
 
 > 这里是NCOV 2020疫情防控-人员健康管理平台开源项目的小程序后端--Golang版本。  详细项目记录及学习文档见[doc文件夹](https://github.com/huagua/MiniProgram-server-Golang/tree/master/doc)
 
-主项目入口 >> https://github.com/2020NCOV/ncov-report
+主项目入口 >> https://github.com/2020NCOV/ncov-report  
+
+![build](https://github.com/2020NCOV/MiniProgram-server-Golang/workflows/build/badge.svg)
 
 ## 项目导航
 - [ncov-report-wx-server-Golang](#ncov-report-wx-server-golang)
