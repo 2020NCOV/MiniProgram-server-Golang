@@ -29,6 +29,19 @@ jobs:
             curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
             dep ensure
         fi
-
-    - name: Build
+    - name: Build go
       run: go build -v .
+
+    - name: Login to docker hub
+      uses: actions-hub/docker/login@master
+      env:
+        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      
+    - name: Build Docker :latest
+      run:  docker build -f Dockerfile_hub -t ${{ secrets.GITHUB_REPOSITORY }}:latest .
+
+    - name: Build & Push to docker hub :latest
+      uses: actions-hub/docker@master
+      with:
+        args: push ${{ secrets.GITHUB_REPOSITORY }}:latest
