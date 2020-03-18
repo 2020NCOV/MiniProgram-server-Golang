@@ -6,14 +6,15 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/medivhzhan/weapp/v2"
 	"os"
+	"time"
 )
 
-// 获取用户token服务
+// UserOpenIDService 获取用户token服务
 type UserOpenIDService struct {
 	Code string `form:"code" json:"code"`
 }
 
-// 用户登录函数，获取openid和sessionkey，作为之后操作的验证
+// GetCode 用户登录函数，获取openidhesessionkey，作为之后操作的验证
 func (service *UserOpenIDService) GetCode(c *gin.Context) serializer.Response {
 	res, err := weapp.Login(os.Getenv("APP_ID"), os.Getenv("APP_SECRET"), service.Code)
 
@@ -30,16 +31,16 @@ func (service *UserOpenIDService) GetCode(c *gin.Context) serializer.Response {
 	//查看数据库中是否已有token信息
 	var wid int64
 	var token string
-	//err = model.DB.QueryRow("select wid from wx_mp_user where wid = ?", UID).Scan(&wid)
+	//err = model.DB2.QueryRow("select wid from wx_mp_user where wid = ?", UID).Scan(&wid)
 	err = model.DB.QueryRow("select wid, token from wx_mp_user where openid = ?", res.OpenID).
 		Scan(&wid, &token)
 
 	if err != nil {
 		//如果没有，重新存入并返回
-		result, err2 := model.DB.Exec("insert into wx_mp_user(openid, token) values(?,?)", res.OpenID, res.SessionKey)
+		result, err2 := model.DB.Exec("insert into wx_mp_user(openid, token, time_out) values(?,?,?)", res.OpenID, res.SessionKey, time.Now())
 		var err3 error
 		wid, err3 = result.LastInsertId()
-		if err2 != nil || err3 != nil {
+		if err2 != nil || err3 != nil{
 			return serializer.Err(1008, "获取请求失败，请退出重试", nil)
 		}
 	}
