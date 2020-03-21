@@ -16,7 +16,7 @@
 ## 目录结构
 ```
 |-- MiniProgram-server-Golang
-    |-- .env.example —— 这个是对环境变量如何设置的示例，在自己的项目中改名为.env并加入.gitignore
+    |-- .env.example —— 这个是对环境变量如何设置的示例，在自己的项目中新建一个.env文件
     |-- .gitignore—— 上传代码时一些不需要上传的文件就加入.gitignore
     |-- go.mod ——  Golang包管理工具
     |-- main.go  —— 项目入口
@@ -68,7 +68,6 @@ APP_ID=""                   #appid
 APP_SECRET=""              #appsecret
 ```
 注：
-- 其实redis没有用到，环境变量中不写也可
 - 将db_user和db_passwd修改为自己本地的mysql连接的用户名和密码，并创建相应的数据库，将db_name替换成对应数据库名
 - 补充自己注册的小程序的app_id和app_secret
 
