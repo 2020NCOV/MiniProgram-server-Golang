@@ -54,5 +54,7 @@ func NewRouter() *gin.Engine {
 		v3.POST("/getbindinfo", api.GetBindInfo)
 	}
 
+	router.GET("index/district/getall", api.GetAll)
+
 	return router
 }
